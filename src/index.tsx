@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Rotas from './components/Rotas';
 import { ThemeProvider } from "@mui/material";
-import { tema } from "./temas/Tema";
+import { temaPadrao } from "./temas/Tema";
 import "./styles/global.css";
 
 const root = ReactDOM.createRoot(
@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={tema.padrao}>
+    <ThemeProvider theme={temaPadrao}>
       <Rotas/>
     </ThemeProvider>
   </React.StrictMode>
