@@ -1,6 +1,6 @@
-import { Grid } from "@mui/material";
-import { Logo } from "../../styles/global";
-import Footer from "../../components/Footer"; 
+import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
+import { Logo, BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario } from "../../styles/global";
+import Footer from "../../components/Footer";
 import imgLogo from "../../images/logo.png";
 import { Formulario } from "./LoginStyles";
 function Login() {
@@ -10,8 +10,17 @@ function Login() {
                 <Grid item container justifyContent="center" xs={6}>
                     <Logo src={imgLogo}/>
                 </Grid>
-                <Formulario item xs={6}>
-                    
+                <Formulario item container justifyContent="center" xs={6}>
+                    <BlocoNotasLogin>
+                        <Typography variant="h4">Entrar</Typography>
+                        <Linha/>
+                        <InputPadrao size="small" id="login" label="Login" variant="outlined" required />
+                        <InputPadrao size="small" id="senha" label="Senha" variant="outlined" required />
+                        <BotaoFormulario variant="contained" color="success">
+                            Entrar
+                        </BotaoFormulario>
+                        <FormControlLabel control={<Checkbox defaultChecked />} label="Manter-me conectado" />
+                    </BlocoNotasLogin>
                 </Formulario>
             </Grid>
             <Footer/>
