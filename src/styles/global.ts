@@ -9,16 +9,6 @@ export const Corpo = styled(Grid)(() => ({
         minHeight: '100vh' 
     }
 }));
-export const Logo = styled('img')(() => ({
-    width: '55%',
-    minWidth: '300px'
-}));
-export const DivLogo = styled(Grid)(() => ({
-    justifyContent: "center",
-'@media screen and (max-width: 800px)': {
-    display: 'none'
-}
-}));
 export const BlocoNotasLogin = styled(FormGroup)(() => ({
     display: 'flex',
     flexDirection: 'column',
