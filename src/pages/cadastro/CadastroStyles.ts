@@ -1,5 +1,6 @@
-import { Grid, styled } from "@mui/material";
-export const Formulario = styled(Grid)(() => ({
+import { styled } from "@mui/material";
+import { Formulario } from "../login/LoginStyles";
+export const FormularioCadastro = styled(Formulario)(() => ({
     height: '80%',
     minHeight: '520px',
     display: 'flex',

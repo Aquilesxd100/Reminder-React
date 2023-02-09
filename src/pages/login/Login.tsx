@@ -1,16 +1,14 @@
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { Logo, BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario, DivLogo, Corpo } from "../../styles/global";
+import { BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
-import imgLogo from "../../images/logo.png";
+import GridLogo from "../../components/GridLogo";
 import { Formulario } from "./LoginStyles";
 function Login() {
     return (
         <>
             <Corpo container>
-                <DivLogo item container justifyContent="center" xs={12} md={6}>
-                    <Logo src={imgLogo}/>
-                </DivLogo>
-                <Formulario item container justifyContent="center" xs={12} md={6}>
+                <GridLogo />
+                <Formulario item container xs={12} md={6}>
                     <BlocoNotasLogin>
                         <Typography variant="h4">Entrar</Typography>
                         <Linha/>
@@ -20,7 +18,7 @@ function Login() {
                             Entrar
                         </BotaoFormulario>
                         <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked />} label="Manter-me conectado" />
-                        <a href="">
+                        <a href="/cadastro">
                             <Typography sx={{ marginTop: '-11px' }} variant="subtitle1">Criar Conta</Typography>
                         </a>
                     </BlocoNotasLogin>

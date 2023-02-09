@@ -13,5 +13,5 @@ export const temaPadrao = createTheme ({
           lg: 1200,
           xl: 1536,
         }
-    }
+    },
 });

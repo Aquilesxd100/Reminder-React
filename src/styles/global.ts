@@ -14,6 +14,7 @@ export const Logo = styled('img')(() => ({
     minWidth: '300px'
 }));
 export const DivLogo = styled(Grid)(() => ({
+    justifyContent: "center",
 '@media screen and (max-width: 800px)': {
     display: 'none'
 }
