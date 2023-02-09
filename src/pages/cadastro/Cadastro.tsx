@@ -1,27 +1,27 @@
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario, Corpo } from "../../styles/global";
+import { Typography } from "@mui/material";
+import { BlocoNotasCadastro, Linha, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
-import { FormularioCadastro } from "./CadastroStyles";
+import { FormularioCadastro, InputCadastro, BotaoCadastro } from "./CadastroStyles";
 function Cadastro() {
     return (
         <>
             <Corpo container>
                 <GridLogo />
                 <FormularioCadastro item container xs={12} md={6}>
-                    <BlocoNotasLogin>
+                    <BlocoNotasCadastro>
                         <Typography variant="h4">Cadastro</Typography>
                         <Linha/>
-                        <InputPadrao size="small" id="login" label="Login" variant="outlined" required />
-                        <InputPadrao size="small" id="senha" label="Senha" variant="outlined" required />
-                        <BotaoFormulario variant="contained" color="success">
-                            Entrar
-                        </BotaoFormulario>
-                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked />} label="Manter-me conectado" />
-                        <a href="/cadastro">
-                            <Typography sx={{ marginTop: '-11px' }} variant="subtitle1">Criar Conta</Typography>
+                        <InputCadastro size="small" id="login" label="Seu Login" variant="outlined" required />
+                        <InputCadastro size="small" id="senha" label="Sua Senha" variant="outlined" required />
+                        <InputCadastro size="small" id="senha-2" label="Repita a Senha" variant="outlined" required />
+                        <BotaoCadastro variant="contained" color="success">
+                            Criar Conta
+                        </BotaoCadastro>
+                        <a href="/login">
+                            <Typography variant="subtitle1">Já tenho uma conta</Typography>
                         </a>
-                    </BlocoNotasLogin>
+                    </BlocoNotasCadastro>
                 </FormularioCadastro>
             </Corpo>
             <Footer/>

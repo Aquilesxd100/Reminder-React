@@ -1,5 +1,6 @@
 import { styled, FormGroup, Divider, TextField, Button, Grid } from "@mui/material";
-import fundoForm from "../images/index.png";
+import fundoFormLogin from "../images/nota_login.png";
+import fundoFormCadastro from "../images/nota_nova_conta.png";
 export const Corpo = styled(Grid)(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -18,7 +19,7 @@ export const BlocoNotasLogin = styled(FormGroup)(() => ({
     maxWidth: '650px',
     height: '100%',
     maxHeight: '550px',
-    backgroundImage: `url(${fundoForm})`,
+    backgroundImage: `url(${fundoFormLogin})`,
     backgroundSize: '100% 100%',
     backgroundRepeat: 'no-repeat',
     '@media screen and (min-width: 1350px)': {
@@ -70,4 +71,8 @@ export const InputPadrao = styled(TextField)(() => ({
 export const BotaoFormulario = styled(Button)(() => ({
     width: '50%',
     margin: '3px 0 0 0'
+}))
+export const BlocoNotasCadastro = styled(BlocoNotasLogin)(() => ({
+    padding: '20% 3% 0 0',
+    backgroundImage: `url(${fundoFormCadastro})`,
 }))
