@@ -8,5 +8,8 @@ export const FooterDiv = styled(Box)(() => ({
     backgroundImage: `url(${fundoFooter})`,
     backgroundRepeat: 'repeat-x',
     backgroundSize: 'contain',
-    borderTop: '5px solid #007FFF'
+    borderTop: '5px solid #007FFF',
+    '@media screen and (max-width: 800px)': {
+        display: 'none'
+    }
 }));

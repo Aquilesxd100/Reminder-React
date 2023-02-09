@@ -1,16 +1,16 @@
-import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
-import { Logo, BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario } from "../../styles/global";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Logo, BlocoNotasLogin, Linha, InputPadrao, BotaoFormulario, DivLogo, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
 import imgLogo from "../../images/logo.png";
 import { Formulario } from "./LoginStyles";
 function Login() {
     return (
         <>
-            <Grid container justifyContent="space-around" alignItems="center" sx={{ height: "calc(100vh - 55px)" }}>
-                <Grid item container justifyContent="center" xs={6}>
+            <Corpo container>
+                <DivLogo item container justifyContent="center" xs={12} md={6}>
                     <Logo src={imgLogo}/>
-                </Grid>
-                <Formulario item container justifyContent="center" xs={6}>
+                </DivLogo>
+                <Formulario item container justifyContent="center" xs={12} md={6}>
                     <BlocoNotasLogin>
                         <Typography variant="h4">Entrar</Typography>
                         <Linha/>
@@ -19,10 +19,13 @@ function Login() {
                         <BotaoFormulario variant="contained" color="success">
                             Entrar
                         </BotaoFormulario>
-                        <FormControlLabel control={<Checkbox defaultChecked />} label="Manter-me conectado" />
+                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked />} label="Manter-me conectado" />
+                        <a href="">
+                            <Typography sx={{ marginTop: '-11px' }} variant="subtitle1">Criar Conta</Typography>
+                        </a>
                     </BlocoNotasLogin>
                 </Formulario>
-            </Grid>
+            </Corpo>
             <Footer/>
         </>
     )
