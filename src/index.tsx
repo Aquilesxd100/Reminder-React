@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import Rotas from './components/Rotas';
 import { ThemeProvider } from "@mui/material";
 import { temaPadrao } from "./temas/Tema";
+import { Provider } from "react-redux";
+import store from "./redux/configureStore";
 import "./styles/global.css";
 
 const root = ReactDOM.createRoot(
@@ -10,8 +12,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={temaPadrao}>
-      <Rotas/>
-    </ThemeProvider>
+    <Provider store={ store }>
+      <ThemeProvider theme={temaPadrao}>
+        <Rotas/>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>
 );

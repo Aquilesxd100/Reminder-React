@@ -1,9 +1,12 @@
 import { Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 import { BlocoNotasCadastro, Linha, Corpo } from "../../styles/global";
+import { accountType } from "../../types/types";
 import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
 import { FormularioCadastro, InputCadastro, BotaoCadastro } from "./CadastroStyles";
 function Cadastro() {
+    const { accounts } = useSelector<accountType>((state) => state.user);
     return (
         <>
             <Corpo container>
