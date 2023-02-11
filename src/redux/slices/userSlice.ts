@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-/* import { passwordValidation, userValidation } from "../../helpers/authentications"; */
+import userValidation from "../../helpers/userValidation";
+import passwordValidation from "../../helpers/passwordValidation";
 import { loggedUser, accountType } from "../../types/types";
 export const userSlice = createSlice({
     name: "accountsHandler",
@@ -9,7 +10,9 @@ export const userSlice = createSlice({
     },
     reducers: {
         newAccount: (state, action) => {
+/*             if (userValidation() && passwordValidation()) {
 
+            } */
         },
         deleteAccount: (state, action) => {
 

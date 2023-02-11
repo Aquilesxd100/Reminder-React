@@ -1,6 +1,5 @@
-import { accountType } from "../types/types";
-export function userValidation(account : accountType) {
-    let contas = [];
+export default function userValidation(account : string):boolean {
+    let accounts = [];
     let validacao = true;
     if (localStorage.contas) {
         contas = JSON.parse(localStorage.contas);
@@ -23,6 +22,3 @@ export function userValidation(account : accountType) {
     }
     return validacao;
 };
-export function passwordValidation() {
-    
-}
