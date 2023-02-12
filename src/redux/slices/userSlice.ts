@@ -1,18 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import userValidation from "../../helpers/userValidation";
-import passwordValidation from "../../helpers/passwordValidation";
-import { loggedUser, accountType } from "../../types/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NewUserType, AccountStorageType } from "../../types/types";
+const initialState : AccountStorageType = {
+    accounts: [],
+    loggedAccount: [],
+};
 export const userSlice = createSlice({
     name: "accountsHandler",
-    initialState: {
-        accounts: Array<accountType>,
-        loggedAccount: [],
-    },
+    initialState,
     reducers: {
-        newAccount: (state, action) => {
-/*             if (userValidation() && passwordValidation()) {
-
-            } */
+        newAccount: (state, action : PayloadAction<NewUserType>) => {
+            state.accounts.push({
+                username: action.payload.username,
+                password: action.payload.password,
+                reminders: []
+            });
         },
         deleteAccount: (state, action) => {
 

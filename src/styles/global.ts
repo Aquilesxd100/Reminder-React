@@ -46,10 +46,10 @@ export const InputPadrao = styled(TextField)(() => ({
     borderRadius: '5px',
     fontFamily: 'comic',
     margin: '8px 5px 4px 5px',
-    '& .MuiOutlinedInput-root' : {
+    '& .MuiFilledInput-root' : {
         background: "#FFFFFF",
     },
-    '& .MuiOutlinedInput-notchedOutline': {
+    '& .MuiFilledInput-notchedOutline': {
         borderColor: '#26C9FF',
         borderWidth: '2px',
         padding: '2px 6px',

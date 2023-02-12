@@ -12,8 +12,8 @@ function Login() {
                     <BlocoNotasLogin>
                         <Typography variant="h4">Entrar</Typography>
                         <Linha/>
-                        <InputPadrao size="small" id="login" label="Login" variant="outlined" required />
-                        <InputPadrao size="small" id="senha" label="Senha" variant="outlined" required />
+                        <InputPadrao size="small" id="login" label="Login" variant="filled" required />
+                        <InputPadrao size="small" id="senha" label="Senha" variant="filled" required />
                         <BotaoFormulario variant="contained" color="success">
                             Entrar
                         </BotaoFormulario>
