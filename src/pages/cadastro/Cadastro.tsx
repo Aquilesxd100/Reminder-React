@@ -7,12 +7,12 @@ import GridLogo from "../../components/GridLogo";
 import { FormularioCadastro, InputCadastro, BotaoCadastro } from "./CadastroStyles";
 import { useStoreDispatch } from "../../redux/configureStore";
 import { newAccount } from "../../redux/slices/userSlice";
-import userValidation from "../../helpers/newAccount/userValidation";
-import passwordValidation from "../../helpers/newAccount/passwordValidation";
+import userValidation from "../../helpers/newAccount/userValidationCreation";
+import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
 import { ErrorAuthType, ErrorInputProp } from "../../types/types";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
-    const { accounts } = useSelector((state : any) => state.user);
+    const { accounts } = useSelector((state : any) => state.users);
     const [ login, setLogin ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ repeatPassword, setRepeatPassword ] = useState("");
@@ -24,7 +24,7 @@ function Cadastro() {
         };
         const validacaoUserName = userValidation(login, accounts);
         const validacaoPassword = passwordValidation(password);
-        const validacaoPassword2 = password === repeatPassword ? true : false;
+        const validacaoPassword2 = password === repeatPassword ? true : "A senha é diferente.";
         let erro : ErrorAuthType = {
             usernameError: true,
             passwordError: true,
@@ -57,24 +57,18 @@ function Cadastro() {
     const [ inputPasswordProp, setInputPasswordProp ] = useState(errorProp);
     const [ inputPassword2Prop, setInputPassword2Prop] = useState(errorProp);
     useEffect(() => {
-        if (inputErrors.usernameError !== true) {
-            setInputNameProp({ error: true, helperText: inputErrors.usernameError });
-        }
-        else {
-            setInputNameProp({ error: false, helperText: "" });
-        }
-        if (inputErrors.passwordError !== true) {
-            setInputPasswordProp({ error: true, helperText: inputErrors.passwordError });              
-        }
-        else {
-            setInputPasswordProp({ error: false, helperText: "" });
-        };
-        if (inputErrors.password2Error !== true) {
-            setInputPassword2Prop({ error: true, helperText: inputErrors.password2Error });
-        }
-        else {
-            setInputPassword2Prop({ error: false, helperText: "" });
-        };
+        inputErrors.usernameError !== true
+        ? setInputNameProp({ error: true, helperText: inputErrors.usernameError })
+        : setInputNameProp({ error: false, helperText: "" });
+
+        inputErrors.passwordError !== true 
+        ? setInputPasswordProp({ error: true, helperText: inputErrors.passwordError })
+        : setInputPasswordProp({ error: false, helperText: "" });
+
+        inputErrors.password2Error !== true
+        ? setInputPassword2Prop({ error: true, helperText: inputErrors.password2Error })
+        : setInputPassword2Prop({ error: false, helperText: "" });
+
     }, [inputErrors]);
     return (
         <>
@@ -84,9 +78,9 @@ function Cadastro() {
                     <BlocoNotasCadastro>
                         <Typography variant="h4">Cadastro</Typography>
                         <Linha/>
-                        <InputCadastro onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required inputProps={inputNameProp} error={inputNameProp.error} helperText={inputNameProp.helperText} />
-                        <InputCadastro onChange={(event) => {setPassword(event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required inputProps={inputPasswordProp} error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} />
-                        <InputCadastro onChange={(event) => {setRepeatPassword(event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required inputProps={inputPassword2Prop} error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} />
+                        <InputCadastro onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
+                        <InputCadastro onChange={(event) => {setPassword(event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} inputProps={{maxLength: 10}}/>
+                        <InputCadastro onChange={(event) => {setRepeatPassword(event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} inputProps={{maxLength: 10}}/>
                         <BotaoCadastro onClick={(event) => { handleUser(); event.preventDefault() }} variant="contained" color="success">
                             Criar Conta
                         </BotaoCadastro>

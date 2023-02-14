@@ -68,7 +68,8 @@ export const InputPadrao = styled(TextField)(() => ({
         textAlign: 'center'
     },
     '& .MuiInputBase-input' : {
-        background: '#FFFFFF'
+        background: '#FFFFFF',
+        textTransform: 'lowercase',
     }
 }));
 export const BotaoFormulario = styled(Button)(() => ({

@@ -3,14 +3,22 @@ import { useDispatch } from "react-redux";
 import userReducer from "./slices/userSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-const persistConfig = {
+import storageSession from "redux-persist/lib/storage/session"
+const persistStorageConfig = {
     key: 'accounts',
     storage,  
 };
-const persistedReducer = persistReducer(persistConfig, userReducer);
+const persistSessionConfig = {
+    key: 'accounts',
+    storage:storageSession  
+};
+const persistedReducer = persistReducer(persistStorageConfig, userReducer);
+const sessionReducer = persistReducer(persistSessionConfig, userReducer);
 const store = configureStore({
     reducer: {
-        user: persistedReducer,
+        users: persistedReducer,
+        loggedStorageAccount: persistedReducer,
+        loggedSessionAccount: sessionReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
