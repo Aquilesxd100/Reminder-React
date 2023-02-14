@@ -45,7 +45,7 @@ export const InputPadrao = styled(TextField)(() => ({
     maxWidth: '50vw',
     borderRadius: '5px',
     fontFamily: 'comic',
-    margin: '8px 5px 4px 5px',
+    margin: '4px 5px 4px 5px',
     '& .MuiFilledInput-root' : {
         background: "#FFFFFF",
     },
@@ -66,6 +66,9 @@ export const InputPadrao = styled(TextField)(() => ({
     '& .MuiFormHelperText-root' : {
         marginTop: '2px',
         textAlign: 'center'
+    },
+    '& .MuiInputBase-input' : {
+        background: '#FFFFFF'
     }
 }));
 export const BotaoFormulario = styled(Button)(() => ({

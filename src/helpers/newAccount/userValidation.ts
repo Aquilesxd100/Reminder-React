@@ -6,6 +6,6 @@ export default function userValidation(userName : string, accounts : Array<Accou
             if (userName === account.username) { validation = "Esse login já existe." };
         });
     };
-    if (userName.length < 4) { validation = "O login precisa ter ao menos 4 letras." };
+    if (userName.length < 4) { validation = "Precisa ter ao menos 4 letras." };
     return validation;
 };

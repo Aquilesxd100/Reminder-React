@@ -23,7 +23,8 @@ function Cadastro() {
             repeatPassword: repeatPassword
         };
         const validacaoUserName = userValidation(login, accounts);
-        const validacaoPassword = passwordValidation(password, repeatPassword);
+        const validacaoPassword = passwordValidation(password);
+        const validacaoPassword2 = password === repeatPassword ? true : false;
         let erro : ErrorAuthType = {
             usernameError: true,
             passwordError: true,
@@ -32,11 +33,11 @@ function Cadastro() {
         if (validacaoUserName === true && validacaoPassword === true) {
             dispatch(newAccount(newUser));
         };
-        if (validacaoUserName !== true || validacaoPassword !== true) {
+        if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
             erro = {
                 usernameError: validacaoUserName,
                 passwordError: validacaoPassword,
-                password2Error: validacaoPassword,
+                password2Error: validacaoPassword2,
             };
             setInputErrors(erro);
         }
