@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BlocoNotas, Linha, Corpo, Formulario, InputPadrao, BotaoFormulario } from "../../styles/global";
+import { Linha, Corpo, Formulario, InputPadrao, BotaoFormulario } from "../../styles/global";
 import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
 import { useStoreDispatch } from "../../redux/configureStore";
@@ -9,12 +9,20 @@ import { newAccount } from "../../redux/slices/userSlice";
 import userValidation from "../../helpers/newAccount/userValidationCreation";
 import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
 import { ErrorAuthType, ErrorInputProp } from "../../types/types";
+import { BlocoNotasCadastro } from "./CadastroStyled";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
     const { accounts } = useSelector((state : any) => state.users);
+    const { loggedStorageAccount } = useSelector((state : any) => state.loggedStorageAccount);
+    const { loggedSessionAccount } = useSelector((state : any) => state.loggedSessionAccount);
     const [ login, setLogin ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ repeatPassword, setRepeatPassword ] = useState("");
+    useEffect(() => {
+        if (loggedStorageAccount !== undefined || loggedSessionAccount !== undefined) {
+           /*  window.open("/recados", "_self"); */
+        }
+    }, []);
     function handleUser() {
         const newUser = {
             username: login,
@@ -31,6 +39,7 @@ function Cadastro() {
         }
         if (validacaoUserName === true && validacaoPassword === true) {
             dispatch(newAccount(newUser));
+            window.open("/login", "_self");
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
             erro = {
@@ -74,7 +83,7 @@ function Cadastro() {
             <Corpo container>
                 <GridLogo />
                 <Formulario item container xs={12} md={6}>
-                    <BlocoNotas>
+                    <BlocoNotasCadastro>
                         <Typography variant="h4">Cadastro</Typography>
                         <Linha/>
                         <InputPadrao onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
@@ -86,7 +95,7 @@ function Cadastro() {
                         <a href="/login">
                             <Typography variant="subtitle1">Já tenho uma conta</Typography>
                         </a>
-                    </BlocoNotas>
+                    </BlocoNotasCadastro>
                 </Formulario>
             </Corpo>
             <Footer/>

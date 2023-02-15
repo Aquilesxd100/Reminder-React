@@ -1,6 +1,5 @@
 import { styled, FormGroup, Divider, TextField, Button, Grid } from "@mui/material";
 import fundoFormLogin from "../images/nota_login.png";
-import fundoFormCadastro from "../images/nota_nova_conta.png";
 export const Corpo = styled(Grid)(() => ({
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -31,7 +30,6 @@ export const BlocoNotas = styled(FormGroup)(() => ({
     width: '80%',  
     height: 'auto',
     maxHeight: 'none',
-/*     padding: '100px 3% 85px 0', */
     padding: 'clamp(100px, 14vw, 17vh) 3% clamp(85px, 11vw, 15vh) 0',
     maxWidth: '650px',
     backgroundImage: `url(${fundoFormLogin})`,
@@ -40,11 +38,9 @@ export const BlocoNotas = styled(FormGroup)(() => ({
     '@media screen and (min-width: 1350px)': {
         maxHeight: 'auto',
         padding: 'clamp(110px, 14vw, 17vh) 3% clamp(85px, 11vw, 15vh) 0',
-/*         padding: '110px 3% 85px 0', */
     },
     '@media screen and (max-width: 800px)': {
         minHeight: 'auto',
-        /* padding: '105px 3% 80px 0', */
         padding: 'clamp(105px, 14vh, 17vw) 3% clamp(80px, 11vh, 15vw) 0',
         minWidth: '310px',
         maxWidth: '500px',
@@ -55,7 +51,6 @@ export const BlocoNotas = styled(FormGroup)(() => ({
             top: '-15px',
         },
     }
-
 }));
 export const InputPadrao = styled(TextField)(() => ({
     textAlign: 'center',

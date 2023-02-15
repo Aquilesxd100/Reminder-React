@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
@@ -12,12 +12,17 @@ function Login() {
         helperText: "",
     };
     const { accounts } = useSelector((state : any) => state.users);
-    const { loggedStorageAccount } = useSelector((state : any) => state.loggedStorageAccount)
-    const { loggedSessionAccount } = useSelector((state : any) => state.loggedSessionAccount)
+    const { loggedStorageAccount } = useSelector((state : any) => state.loggedStorageAccount);
+    const { loggedSessionAccount } = useSelector((state : any) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
     const [inputPasswordProp, setInputPasswordProp] = useState(errorAndInfoProp);
     const [inputLogin, setInputLogin] = useState("");
     const [inputPassword, setInputPassword] = useState("");
+    useEffect(() => {
+        if (loggedStorageAccount !== undefined || loggedSessionAccount !== undefined) {
+            /* window.open("/recados", "_self"); */
+        }
+    }, []);
     function handleUser() {
         const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
         if (authentication === true) {
