@@ -1,10 +1,9 @@
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BlocoNotasCadastro, Linha, Corpo } from "../../styles/global";
+import { BlocoNotas, Linha, Corpo, Formulario, InputPadrao, BotaoFormulario } from "../../styles/global";
 import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
-import { FormularioCadastro, InputCadastro, BotaoCadastro } from "./CadastroStyles";
 import { useStoreDispatch } from "../../redux/configureStore";
 import { newAccount } from "../../redux/slices/userSlice";
 import userValidation from "../../helpers/newAccount/userValidationCreation";
@@ -74,21 +73,21 @@ function Cadastro() {
         <>
             <Corpo container>
                 <GridLogo />
-                <FormularioCadastro item container xs={12} md={6}>
-                    <BlocoNotasCadastro>
+                <Formulario item container xs={12} md={6}>
+                    <BlocoNotas>
                         <Typography variant="h4">Cadastro</Typography>
                         <Linha/>
-                        <InputCadastro onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
-                        <InputCadastro onChange={(event) => {setPassword(event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} inputProps={{maxLength: 10}}/>
-                        <InputCadastro onChange={(event) => {setRepeatPassword(event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} inputProps={{maxLength: 10}}/>
-                        <BotaoCadastro onClick={(event) => { handleUser(); event.preventDefault() }} variant="contained" color="success">
+                        <InputPadrao onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
+                        <InputPadrao onChange={(event) => {setPassword(event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
+                        <InputPadrao onChange={(event) => {setRepeatPassword(event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
+                        <BotaoFormulario onClick={(event) => { handleUser(); event.preventDefault() }} variant="contained" color="success">
                             Criar Conta
-                        </BotaoCadastro>
+                        </BotaoFormulario>
                         <a href="/login">
                             <Typography variant="subtitle1">Já tenho uma conta</Typography>
                         </a>
-                    </BlocoNotasCadastro>
-                </FormularioCadastro>
+                    </BlocoNotas>
+                </Formulario>
             </Corpo>
             <Footer/>
         </>

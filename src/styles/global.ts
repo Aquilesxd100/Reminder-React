@@ -10,42 +10,58 @@ export const Corpo = styled(Grid)(() => ({
         minHeight: '100vh' 
     }
 }));
-export const BlocoNotasLogin = styled(FormGroup)(() => ({
+export const Formulario = styled(Grid)(() => ({
+    height: '80%',
+    minHeight: '520px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: "center",
+    '@media screen and (max-width: 800px)': {
+        display: 'flex',
+        alignItems: 'center',
+        minHeight: '80%',
+        height: 'inherit',
+        padding: '10px 0'
+    }
+}));
+export const BlocoNotas = styled(FormGroup)(() => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 'clamp(120px, 20%, 170px) 3% 0 0',
-    width: '80%',
+    width: '80%',  
+    height: 'auto',
+    maxHeight: 'none',
+/*     padding: '100px 3% 85px 0', */
+    padding: 'clamp(100px, 14vw, 17vh) 3% clamp(85px, 11vw, 15vh) 0',
     maxWidth: '650px',
-    height: '100%',
-    maxHeight: '550px',
     backgroundImage: `url(${fundoFormLogin})`,
     backgroundSize: '100% 100%',
     backgroundRepeat: 'no-repeat',
     '@media screen and (min-width: 1350px)': {
-        maxHeight: '650px',
-        padding: '160px 3% 0 0',
+        maxHeight: 'auto',
+        padding: 'clamp(110px, 14vw, 17vh) 3% clamp(85px, 11vw, 15vh) 0',
+/*         padding: '110px 3% 85px 0', */
     },
     '@media screen and (max-width: 800px)': {
-        padding: 'clamp(100px, 20%, 170px) 3% 0 0',
-        minHeight: 'clamp(500px, 80vw, 80vw)',
+        minHeight: 'auto',
+        /* padding: '105px 3% 80px 0', */
+        padding: 'clamp(105px, 14vh, 17vw) 3% clamp(80px, 11vh, 15vw) 0',
         minWidth: '310px',
         maxWidth: '500px',
+    },   
+    '@media screen and (max-width: 380px)' : {
+        '@media screen and (max-height: 520px)' : {
+            position: 'relative',
+            top: '-15px',
+        },
     }
-}));
-export const Linha = styled(Divider)(() => ({
-    width: '80%',
-    height: '3px',
-    backgroundColor: '#31BCD5',
-    boxShadow: '1px 1px 1px',
-    marginBottom: '4px'
+
 }));
 export const InputPadrao = styled(TextField)(() => ({
     textAlign: 'center',
-    maxWidth: '50vw',
+    margin: '3px 5px 3px 5px',
     borderRadius: '5px',
     fontFamily: 'comic',
-    margin: '4px 5px 4px 5px',
     '& .MuiFilledInput-root' : {
         background: "#FFFFFF",
     },
@@ -63,9 +79,18 @@ export const InputPadrao = styled(TextField)(() => ({
         padding: '1px 8px 0 8px',
         borderRadius: '5px',
     },
+    '@media screen and (max-width: 800px)' : {
+        width: '50%',
+    },
     '& .MuiFormHelperText-root' : {
         marginTop: '2px',
-        textAlign: 'center'
+        textAlign: 'center',
+        '@media screen and (max-width: 800px)' : {
+            position: 'relative',
+            fontSize: 'clamp(11px, 2vw, 15px)',
+            width: '130%',
+            right: '23%'
+        }
     },
     '& .MuiInputBase-input' : {
         background: '#FFFFFF',
@@ -74,9 +99,12 @@ export const InputPadrao = styled(TextField)(() => ({
 }));
 export const BotaoFormulario = styled(Button)(() => ({
     width: '50%',
-    margin: '3px 0 0 0'
-}))
-export const BlocoNotasCadastro = styled(BlocoNotasLogin)(() => ({
-    padding: '20% 3% 0 0',
-    backgroundImage: `url(${fundoFormCadastro})`,
-}))
+    margin: '5px 0 0 0'
+}));
+export const Linha = styled(Divider)(() => ({
+    width: '80%',
+    height: '3px',
+    backgroundColor: '#31BCD5',
+    boxShadow: '1px 1px 1px',
+    marginBottom: '4px'
+}));

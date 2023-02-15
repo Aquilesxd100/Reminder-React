@@ -4,13 +4,13 @@ export const FooterDiv = styled(Box)(() => ({
     position: 'fixed',
     width: '100%',
     bottom: 0,
-    padding: '10px 0',
+    padding: 'clamp(3px, 1vh, 10px) 0',
     backgroundImage: `url(${fundoFooter})`,
     backgroundRepeat: 'repeat-x',
     backgroundSize: 'contain',
     borderTop: '5px solid #007FFF',
     '& h5': {
-        fontSize: 'calc(10px + 1.4vw)',
+        fontSize: 'clamp(10px, 2vw, 5vh)',
     },
     '@media screen and (max-width: 800px)': {
         display: 'none'
