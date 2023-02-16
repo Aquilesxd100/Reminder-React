@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { AlertColor, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
 import { AccountType, ErrorInputProp } from "../../types/types";
 import userValidation from "../../helpers/logIn/validations";
-import { useSelector } from "react-redux";
-import { AlertSucess } from "./LoginStyled";
+import { useDispatch, useSelector } from "react-redux";
+import { AlertCustom } from "./LoginStyled";
+import { disableNotification } from "../../redux/slices/notificationsSlice";
 function Login() {
+    const dispatch = useDispatch();
     const errorAndInfoProp : ErrorInputProp = {
         error: false,
         helperText: "",
@@ -23,10 +25,33 @@ function Login() {
         if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
             /* window.open("/recados", "_self"); */
         }
-        else {
-
-        }
     }, []);
+    const { textAlert, typeAlert, currentState } = useSelector((state : any) => state.notifyAlert);
+    const alertTypeProp: AlertColor = "success";
+    const [alertType, setAlertType] = useState(alertTypeProp);
+    const [alertCheck, setAlertCheck] = useState(0);
+    useEffect(() => {
+        if (document.readyState === 'complete') {
+            if (textAlert !== "" && currentState === true) {
+                let alertStatus = {
+                    typeAlert: typeAlert,
+                    textAlert: textAlert
+                }
+                alertDefault.current.children[1].innerText = alertStatus.textAlert;
+                setAlertType(alertStatus.typeAlert);
+                alertDefault.current.style.top = "-80px";
+                setTimeout((() => {alertDefault.current.style.top = "0px";}), 650);
+                dispatch(disableNotification());
+            }
+        }
+        else {
+            setAlertCheck(alertCheck + 1); 
+        };
+    }, [alertCheck]);
+    function closeAlert() {
+        alertDefault.current.style.pointerEvents = "none";
+        alertDefault.current.style.opacity = "0"; 
+    }
     function handleUser() {
         const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
         if (authentication === true) {
@@ -37,12 +62,11 @@ function Login() {
             setInputPasswordProp({error: true, helperText: authentication});
         };
     }
-    //alertDefault.current.children[1].innerText = "teste"
     const alertDefault : any = useRef();
     return (
         <>
             <Corpo container>
-                <AlertSucess ref={alertDefault} severity="success">Conta criada com sucesso!</AlertSucess>
+                <AlertCustom ref={alertDefault} severity={alertType} onClose={() => {closeAlert()}}></AlertCustom>
                 <GridLogo />
                 <Formulario item container xs={12} md={6}>
                     <BlocoNotas>

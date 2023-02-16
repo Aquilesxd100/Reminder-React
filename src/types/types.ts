@@ -7,9 +7,14 @@ export interface AccountType {
 export interface AccountStorageType {
     accounts: Array<AccountType>,
 };
+export interface AlertStorageType {
+    textAlert: string,
+    typeAlert: string,
+    currentState: boolean
+};
 export interface AlertType {
-    text: string,
-    type: string
+    textAlert: string,
+    typeAlert: string,
 };
 export interface SessionStorageType {
     loggedSessionAccountID: string | undefined

@@ -6,9 +6,10 @@ import Footer from "../../components/Footer";
 import GridLogo from "../../components/GridLogo";
 import { useStoreDispatch } from "../../redux/configureStore";
 import { newAccount } from "../../redux/slices/userSlice";
+import { setNotification } from "../../redux/slices/notificationsSlice";
 import userValidation from "../../helpers/newAccount/userValidationCreation";
 import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
-import { ErrorAuthType, ErrorInputProp } from "../../types/types";
+import { AlertType, ErrorAuthType, ErrorInputProp } from "../../types/types";
 import { BlocoNotasCadastro } from "./CadastroStyled";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
@@ -39,7 +40,12 @@ function Cadastro() {
             password2Error: true,
         }
         if (validacaoUserName === true && validacaoPassword === true) {
+            const alertContent : AlertType = {
+                textAlert: "Conta criada com sucesso!",
+                typeAlert: "success",
+            };
             dispatch(newAccount(newUser));
+            dispatch(setNotification(alertContent));
             window.open("/login", "_self");
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {

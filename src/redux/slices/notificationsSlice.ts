@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AlertType } from "../../types/types";
-const initialState : AlertType = {
-    text: "",
-    type: ""
+import { AlertStorageType } from "../../types/types";
+const initialState : AlertStorageType = {
+    textAlert: "",
+    typeAlert: "",
+    currentState: false,
 }
 export const notificationsSlice = createSlice({
     name: "notifications",
     initialState,
     reducers: {
         setNotification: (state, action) => {
-            state = action.payload;
+            state.textAlert = action.payload.textAlert;
+            state.typeAlert = action.payload.typeAlert;
+            state.currentState = true;
         },
-        removeNotification: (state) => {
-            state = { text: "", type: "" }
+        disableNotification: (state) => {
+            state.currentState = false;
         }
     }
 });
-export const { setNotification, removeNotification } = notificationsSlice.actions;
+export const { setNotification, disableNotification } = notificationsSlice.actions;
 export default notificationsSlice.reducer;
