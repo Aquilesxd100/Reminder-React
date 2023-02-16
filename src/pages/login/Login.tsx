@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
 import Footer from "../../components/Footer";
@@ -6,21 +6,25 @@ import GridLogo from "../../components/GridLogo";
 import { AccountType, ErrorInputProp } from "../../types/types";
 import userValidation from "../../helpers/logIn/validations";
 import { useSelector } from "react-redux";
+import { AlertSucess } from "./LoginStyled";
 function Login() {
     const errorAndInfoProp : ErrorInputProp = {
         error: false,
         helperText: "",
     };
     const { accounts } = useSelector((state : any) => state.users);
-    const { loggedStorageAccount } = useSelector((state : any) => state.loggedStorageAccount);
-    const { loggedSessionAccount } = useSelector((state : any) => state.loggedSessionAccount);
+    const { loggedLocalAccountID } = useSelector((state : any) => state.loggedLocalAccount);
+    const { loggedSessionAccountID } = useSelector((state : any) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
     const [inputPasswordProp, setInputPasswordProp] = useState(errorAndInfoProp);
     const [inputLogin, setInputLogin] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     useEffect(() => {
-        if (loggedStorageAccount !== undefined || loggedSessionAccount !== undefined) {
+        if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
             /* window.open("/recados", "_self"); */
+        }
+        else {
+
         }
     }, []);
     function handleUser() {
@@ -33,9 +37,12 @@ function Login() {
             setInputPasswordProp({error: true, helperText: authentication});
         };
     }
+    //alertDefault.current.children[1].innerText = "teste"
+    const alertDefault : any = useRef();
     return (
         <>
             <Corpo container>
+                <AlertSucess ref={alertDefault} severity="success">Conta criada com sucesso!</AlertSucess>
                 <GridLogo />
                 <Formulario item container xs={12} md={6}>
                     <BlocoNotas>

@@ -1,14 +1,21 @@
 export interface AccountType {
+    id: string,
     username: string,
     password: string,
     reminders: []
 };
-export interface LoggedUserType {
-    id?: string,
-};
 export interface AccountStorageType {
     accounts: Array<AccountType>,
-    loggedAccount: Array<LoggedUserType>,
+};
+export interface AlertType {
+    text: string,
+    type: string
+};
+export interface SessionStorageType {
+    loggedSessionAccountID: string | undefined
+};
+export interface LocalStorageType {
+    loggedLocalAccountID: string | undefined
 };
 export interface NewUserType {
     username: string,

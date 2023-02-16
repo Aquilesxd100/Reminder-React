@@ -13,13 +13,14 @@ import { BlocoNotasCadastro } from "./CadastroStyled";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
     const { accounts } = useSelector((state : any) => state.users);
-    const { loggedStorageAccount } = useSelector((state : any) => state.loggedStorageAccount);
-    const { loggedSessionAccount } = useSelector((state : any) => state.loggedSessionAccount);
+    const { loggedLocalAccountID } = useSelector((state : any) => state.loggedLocalAccount);
+    const { loggedSessionAccountID } = useSelector((state : any) => state.loggedSessionAccount);
     const [ login, setLogin ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ repeatPassword, setRepeatPassword ] = useState("");
+    const [ authSupport, setAuthSupport] = useState(false);
     useEffect(() => {
-        if (loggedStorageAccount !== undefined || loggedSessionAccount !== undefined) {
+        if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
            /*  window.open("/recados", "_self"); */
         }
     }, []);
@@ -42,6 +43,7 @@ function Cadastro() {
             window.open("/login", "_self");
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
+            setAuthSupport(true);
             erro = {
                 usernameError: validacaoUserName,
                 passwordError: validacaoPassword,
@@ -76,8 +78,27 @@ function Cadastro() {
         inputErrors.password2Error !== true
         ? setInputPassword2Prop({ error: true, helperText: inputErrors.password2Error })
         : setInputPassword2Prop({ error: false, helperText: "" });
-
     }, [inputErrors]);
+    function checkError(inputType : string, inputValue : string):void {
+        if (inputType === 'login' && authSupport) {
+            const validacaoUserName = userValidation(inputValue, accounts);
+            validacaoUserName !== true
+            ? setInputNameProp({ error: true, helperText: validacaoUserName })
+            : setInputNameProp({ error: false, helperText: "" });
+        };
+        if (inputType === 'password' && authSupport) {
+            const validacaoPassword = passwordValidation(inputValue);
+            validacaoPassword !== true
+            ? setInputPasswordProp({ error: true, helperText: validacaoPassword })
+            : setInputPasswordProp({ error: false, helperText: "" });
+        };
+        if (inputType === 'password2' && authSupport) {
+            const validacaoPassword2 = password === inputValue ? true : "A senha é diferente.";
+            validacaoPassword2 !== true
+            ? setInputPassword2Prop({ error: true, helperText: validacaoPassword2 })
+            : setInputPassword2Prop({ error: false, helperText: "" });
+        };
+    }
     return (
         <>
             <Corpo container>
@@ -86,9 +107,9 @@ function Cadastro() {
                     <BlocoNotasCadastro>
                         <Typography variant="h4">Cadastro</Typography>
                         <Linha/>
-                        <InputPadrao onChange={(event) => {setLogin(event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
-                        <InputPadrao onChange={(event) => {setPassword(event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
-                        <InputPadrao onChange={(event) => {setRepeatPassword(event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
+                        <InputPadrao onChange={(event) => {setLogin(event.target.value); checkError('login', event.target.value)}} size="small" id="login" label="Seu Login" variant="filled" required error={inputNameProp.error} helperText={inputNameProp.helperText} inputProps={{maxLength: 10}}/>
+                        <InputPadrao onChange={(event) => {setPassword(event.target.value); checkError('password', event.target.value)}} size="small" id="senha" label="Sua Senha" variant="filled" required error={inputPasswordProp.error} helperText={inputPasswordProp.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
+                        <InputPadrao onChange={(event) => {setRepeatPassword(event.target.value); checkError('password2', event.target.value)}} size="small" id="senha-2" label="Repita a Senha" variant="filled" required error={inputPassword2Prop.error} helperText={inputPassword2Prop.helperText} inputProps={{maxLength: 10, type: 'password'}}/>
                         <BotaoFormulario onClick={(event) => { handleUser(); event.preventDefault() }} variant="contained" color="success">
                             Criar Conta
                         </BotaoFormulario>
