@@ -4,6 +4,7 @@ import Lembrete from "../../components/recadosComponents/lembrete/Lembrete";
 import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes } from "./RecadosStyled";
 import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento"
+import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
 function Recados() {
 const username = "teste"
     const lembreteInfos = {
@@ -35,6 +36,8 @@ const username = "teste"
                                 <Typography variant="subtitle2">Clique em "adicionar" para criar um!</Typography>
                             </Nuvemlembretes>
                         </AvisoLembreteVazio> */}
+
+                        <ModalLembrete accountId={"dajdnnh323"} />
                         <TabelaLembretes>
                             <LinhaEspacamento/>
                             <Lembrete id={lembreteInfos.id} acao={lembreteInfos.acao} data={lembreteInfos.data} hora={lembreteInfos.hora} descricao={lembreteInfos.descricao} />

@@ -22,6 +22,17 @@ export interface SessionStorageType {
 export interface LocalStorageType {
     loggedLocalAccountID: string | undefined
 };
+export interface LoggedUserID {
+    id: string
+}
+export interface ReminderInfos {
+    reminderId?: string,
+    acao?: string,
+    data?: string,
+    hora?: string,
+    descricao?: string,
+    accountId: string
+}
 export interface NewUserType {
     username: string,
     password: string,
