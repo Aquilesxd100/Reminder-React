@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import fundoFooter from "../images/footer.jpg";
+import fundoFooter from "../../images/footer.jpg";
 export const FooterDiv = styled(Box)(() => ({
     position: 'fixed',
     width: '100%',

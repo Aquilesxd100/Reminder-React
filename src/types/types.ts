@@ -40,3 +40,13 @@ export interface ErrorInputProp {
     error: boolean,
     helperText: string | boolean,
 };
+export interface HeaderProps {
+    userName: string
+}
+export interface LembreteInfoType {
+    id: string,
+    acao: string,
+    data: string,
+    hora: string,
+    descricao: string
+}

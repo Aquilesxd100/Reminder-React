@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AlertColor, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
-import Footer from "../../components/Footer";
-import GridLogo from "../../components/GridLogo";
+import Footer from "../../components/footer/Footer";
+import GridLogo from "../../components/logo/GridLogo";
 import { AccountType, ErrorInputProp } from "../../types/types";
 import userValidation from "../../helpers/logIn/validations";
 import { useDispatch, useSelector } from "react-redux";
