@@ -3,7 +3,7 @@ import Header from "../../components/header/Header";
 import Lembrete from "../../components/recadosComponents/lembrete/Lembrete";
 import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes } from "./RecadosStyled";
 import { Typography } from "@mui/material";
-import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento"
+import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
 function Recados() {
 const username = "teste"
@@ -13,7 +13,7 @@ const username = "teste"
         data: '15/06/1998',
         hora: '19:15',
         descricao: 'Lavar toda a louça e seca-la no final.'
-    }
+    };
     return (
         <Corpo sx={{height: '100vh'}}>
             <Header userName={username} />

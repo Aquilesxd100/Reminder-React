@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import fundoPainelIMG from "../../images/fundo-conta.jpg";
 export const HeaderDiv = styled('header')(() => ({
     width: '100%',
-    '@media screen and (max-width: 800px)': {
+    '@media screen and (max-width: 767px)': {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around'

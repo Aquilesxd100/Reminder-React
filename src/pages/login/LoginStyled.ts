@@ -13,7 +13,7 @@ export const AlertCustom = styled(Alert)(() => ({
         width: '38px',
         height: '38px'
     },
-    '@media screen and (max-width: 800px)' : {
+    '@media screen and (max-width: 767px)' : {
         padding: '3px calc(10px + 6vw) 3px calc(10px + 6vw)',
         'svg': {
             width: 'clamp(19px, 5vw, 31px)',

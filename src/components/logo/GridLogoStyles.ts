@@ -1,7 +1,7 @@
 import { styled, Grid } from "@mui/material";
 export const DivLogo = styled(Grid)(() => ({
     justifyContent: "center",
-    '@media screen and (max-width: 800px)': {
+    '@media screen and (max-width: 767px)': {
         display: 'none'
     }
 }))

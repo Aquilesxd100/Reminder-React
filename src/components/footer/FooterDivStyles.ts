@@ -12,7 +12,7 @@ export const FooterDiv = styled(Box)(() => ({
     '& h5': {
         fontSize: 'clamp(10px, 2vw, 5vh)',
     },
-    '@media screen and (max-width: 800px)': {
+    '@media screen and (max-width: 767px)': {
         display: 'none'
     }
 }));
