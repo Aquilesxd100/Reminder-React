@@ -16,6 +16,7 @@ function Cadastro() {
     const { accounts } = useSelector((state : any) => state.users);
     const { loggedLocalAccountID } = useSelector((state : any) => state.loggedLocalAccount);
     const { loggedSessionAccountID } = useSelector((state : any) => state.loggedSessionAccount);
+    const { currentState } = useSelector((state : any) => state.notifyAlert);
     const [ login, setLogin ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ repeatPassword, setRepeatPassword ] = useState("");
@@ -25,6 +26,11 @@ function Cadastro() {
            /*  window.open("/recados", "_self"); */
         }
     }, []);
+    useEffect(() => {
+        if (currentState === true) {
+            setTimeout((() => {window.open("/login", "_self");}), 700);
+        }
+    }, [currentState]);
     function handleUser() {
         const newUser = {
             username: login,
@@ -45,8 +51,7 @@ function Cadastro() {
                 typeAlert: "success",
             };
             dispatch(newAccount(newUser));
-            dispatch(setNotification(alertContent));
-            window.open("/login", "_self");
+            dispatch(setNotification(alertContent));           
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
             setAuthSupport(true);

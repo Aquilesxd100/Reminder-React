@@ -8,6 +8,8 @@ import userValidation from "../../helpers/logIn/validations";
 import { useDispatch, useSelector } from "react-redux";
 import { AlertCustom } from "./LoginStyled";
 import { disableNotification } from "../../redux/slices/notificationsSlice";
+import { localLogIn } from "../../redux/slices/loggedLocalSlice";
+import { sessionLogIn } from "../../redux/slices/loggedSessionSlice";
 function Login() {
     const dispatch = useDispatch();
     const errorAndInfoProp : ErrorInputProp = {
@@ -23,7 +25,7 @@ function Login() {
     const [inputPassword, setInputPassword] = useState("");
     useEffect(() => {
         if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
-            /* window.open("/recados", "_self"); */
+            window.open("/recados", "_self");
         }
     }, []);
     const { textAlert, typeAlert, currentState } = useSelector((state : any) => state.notifyAlert);
@@ -39,7 +41,6 @@ function Login() {
                 }
                 alertDefault.current.children[1].innerText = alertStatus.textAlert;
                 setAlertType(alertStatus.typeAlert);
-                alertDefault.current.style.top = "-80px";
                 setTimeout((() => {alertDefault.current.style.top = "0px";}), 650);
                 dispatch(disableNotification());
             }
@@ -52,10 +53,13 @@ function Login() {
         alertDefault.current.style.pointerEvents = "none";
         alertDefault.current.style.opacity = "0"; 
     }
+    const checkBox : any = useRef();
     function handleUser() {
         const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
         if (authentication === true) {
             let logInAccount = accounts.filter((account : AccountType) => account.username === inputLogin).map((account : AccountType) => account.username);
+            alert(checkBox.current.checked);
+            checkBox.current.checked === true ? dispatch(localLogIn(logInAccount)) : dispatch(sessionLogIn(logInAccount));
         }
         else {
             setInputLoginProp(true);
@@ -77,7 +81,7 @@ function Login() {
                         <BotaoFormulario variant="contained" color="success" onClick={(() => { handleUser() })}>
                             Entrar
                         </BotaoFormulario>
-                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked />} label="Manter-me conectado" />
+                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked ref={checkBox} />} label="Manter-me conectado" />
                         <a href="/cadastro">
                             <Typography sx={{ marginTop: '-11px' }} variant="subtitle1">Criar Conta</Typography>
                         </a>
