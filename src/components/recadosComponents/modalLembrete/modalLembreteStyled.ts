@@ -121,28 +121,4 @@ export const InputDescricao = styled('textarea')(() => ({
         fontSize: '15px',
     }
 }));
-export const DivBotoes = styled('div')(() => ({
-    width: '100%',
-    textAlign: 'center',
-}));
-export const BotaoConfirmar = styled(Button)(() => ({
-    margin: '5px 10px',
-    color: '#FFFFFF',
-    backgroundColor: '#198754',
-    minWidth: '25%',
-    '&:hover' : {
-        backgroundColor: '#198754',
-        filter: 'brightness(1.1)',
-        transform: 'scale(1.05)',
-    },
-    '@media screen and (max-width: 767px)' : {
-        minWidth: '65%', 
-    }
-}));
-export const BotaoCancelar = styled(BotaoConfirmar)(() => ({
-    backgroundColor: '#DC3545',
-    '&:hover' : {
-        backgroundColor: '#DC3545',
-    }
-}));
 
