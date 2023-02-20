@@ -13,7 +13,6 @@ import ModalExclusao from "../recadosComponents/modalExclusao/ModalExclusao";
 import { showDeleteModal } from "../../redux/slices/modalManagerSlice";
 function Header(props : HeaderProps) {
     const dispatch = useDispatch();
-    
     function handleLogOut() {
         dispatch(localLogOut());
         dispatch(sessionLogOut());

@@ -2,7 +2,7 @@ export interface AccountType {
     id: string,
     username: string,
     password: string,
-    reminders: []
+    reminders: Array<LembreteInfoType>
 };
 export interface AccountStorageType {
     accounts: Array<AccountType>,
@@ -26,11 +26,7 @@ export interface LoggedUserID {
     id: string
 }
 export interface ReminderInfos {
-    reminderId?: string,
-    acao?: string,
-    data?: string,
-    hora?: string,
-    descricao?: string,
+    reminderId: string,
     accountId: string
 }
 export interface NewUserType {
@@ -62,9 +58,25 @@ export interface LembreteInfoType {
     hora: string,
     descricao: string
 }
+export interface NovoLembreteType {
+    accountID : string,
+    acao: string,
+    data: string,
+    hora: string,
+    descricao: string
+}
+export type EditarLembreteType = NovoLembreteType & ExcluirLembreteType;
+export interface ExcluirLembreteType {
+    accountID : string,
+    reminderID: string
+}
+export interface ReminderModalStateType {
+    type: string,
+    show: boolean
+}
 export interface ModalManagerType {
     showDeleteModalState: boolean,
-    showReminderModalState: boolean
+    showReminderModalState: ReminderModalStateType
 }
 export interface ModalExclusaoProp {
     userID: string,

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewUserType, AccountStorageType, AccountType } from "../../types/types";
+import { NewUserType, AccountStorageType, AccountType, NovoLembreteType, ExcluirLembreteType, EditarLembreteType } from "../../types/types";
 const initialState : AccountStorageType = {
     accounts: [],
 };
@@ -19,7 +19,33 @@ export const userSlice = createSlice({
             const index : number = state.accounts.findIndex((account : AccountType) => account.id === action.payload);
             state.accounts.splice(index, 1);
         },
+        newReminder: (state, action : PayloadAction<NovoLembreteType>) => {
+            const index = state.accounts.findIndex((account) => account.id === action.payload.accountID);
+            state.accounts[index].reminders.push({
+                id: crypto.randomUUID(),
+                acao: action.payload.acao,
+                data: action.payload.data,
+                hora: action.payload.hora,
+                descricao: action.payload.descricao,
+            });
+        },
+        editReminder: (state, action : PayloadAction<EditarLembreteType>) => {
+            const accountIndex = state.accounts.findIndex((account) => account.id === action.payload.accountID); 
+            const reminderIndex = state.accounts[accountIndex].reminders.findIndex((reminder) => reminder.id === action.payload.reminderID);
+            state.accounts[accountIndex].reminders[reminderIndex] = {
+               id: action.payload.reminderID,
+                acao: action.payload.acao,
+                data: action.payload.data,
+                hora: action.payload.hora,
+                descricao: action.payload.descricao
+            }
+        },
+        deleteReminder: (state, action : PayloadAction<ExcluirLembreteType>) => {
+            const accountIndex = state.accounts.findIndex((account) => account.id === action.payload.accountID);
+            const reminderIndex = state.accounts[accountIndex].reminders.findIndex((reminder) => reminder.id === action.payload.reminderID);
+            state.accounts[accountIndex].reminders.splice(reminderIndex, 1);           
+        },
     }
 })
-export const { newAccount, deleteAccount } = userSlice.actions;
+export const { newAccount, deleteAccount, deleteReminder, editReminder, newReminder } = userSlice.actions;
 export default userSlice.reducer;

@@ -12,6 +12,9 @@ export const FormularioLembrete = styled('form')(() => ({
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     zIndex: '1001',
+    opacity: '0',
+    pointerEvents: 'none',
+    transition: 'opacity 0.4s'
 }));
 export const TabelaLembrete = styled('table')(() => ({
     width: '96%',

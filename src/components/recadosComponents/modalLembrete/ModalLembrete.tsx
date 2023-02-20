@@ -1,13 +1,44 @@
-import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import React from "react";
 import { ReminderInfos } from "../../../types/types";
 import { FormularioLembrete, InputAcao, InputData, InputDescricao, InputHora, LabelInput, TabelaLembrete, ThAcao, ThData, ThDescricao, ThHora} from "./modalLembreteStyled";
 import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
+import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
+import { newReminder } from "../../../redux/slices/userSlice";
 function ModalLembrete(lembreteInfo : ReminderInfos) {
+    const dispatch = useDispatch();
+    const modalVisualProps = {
+        pointerEvents: 'none',
+        opacity: '0',
+    }
+    const [modalVisual, setModalVisual] = useState(modalVisualProps);
+    const { showReminderModalState } = useSelector((state : any) => state.modalManager);
+    useEffect(() => {
+        if (showReminderModalState.show) {
+            setModalVisual({
+                pointerEvents: 'auto',
+                opacity: '1',  
+            });
+        }
+    }, [showReminderModalState])
+    function reminderHandle() {
+        if (showReminderModalState.type === "new") {
+            dispatch(newReminder({
+                accountID: lembreteInfo.accountId,
+                acao: '',
+                data: '',
+                hora: '',
+                descricao: '',
+            }));
+        }
+        else if (showReminderModalState.type === "edit") {
+
+        };
+    }
     return(
-        <FormularioLembrete>
+        <FormularioLembrete sx={modalVisual}>
             <TabelaLembrete>
                 <tbody>
                     <tr>
@@ -33,10 +64,10 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 </tbody>
             </TabelaLembrete>
             <DivBotoes>
-                <BotaoConfirmar variant="contained" size="large" startIcon={<CheckCircleIcon />}>
+                <BotaoConfirmar onClick={(() => { reminderHandle() })} variant="contained" size="large" startIcon={<CheckCircleIcon />}>
                     Confirmar
                 </BotaoConfirmar>
-                <BotaoCancelar variant="contained" size="large" startIcon={<CancelIcon />}>
+                <BotaoCancelar onClick={(() => { dispatch(hideReminderModal()); setModalVisual(modalVisualProps); })} variant="contained" size="large" startIcon={<CancelIcon />}>
                     Cancelar
                 </BotaoCancelar>
             </DivBotoes>
