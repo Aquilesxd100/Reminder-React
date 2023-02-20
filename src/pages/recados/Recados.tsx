@@ -23,6 +23,9 @@ function Recados() {
     const [checkLoadPage, setCheckLoadPage] = useState(0);
     useEffect(() => {
         if (document.readyState === "complete") {
+            if (loggedSessionAccountID === undefined && loggedLocalAccountID === undefined) {
+                window.open("/login", "_self");
+            }
             const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
             const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
             setUser(loggedAccount);
@@ -40,7 +43,7 @@ function Recados() {
     }; */
     return (
         <Corpo sx={{height: '100vh'}}>
-            {user.username !== undefined && <Header userName={user.username} />}
+            <Header userID={user.id} userName={user.username} />
             <RecadosDiv>
                 <BarraTituloTabela>
                     <TituloTabela>
@@ -60,7 +63,6 @@ function Recados() {
                                 <Typography variant="subtitle2">Clique em "adicionar" para criar um!</Typography>
                             </Nuvemlembretes>
                         </AvisoLembreteVazio> */}
-                        {/* <ModalExclusao /> */}
                         {/* <ModalLembrete accountId={"dajdnnh323"} /> */}
                         <TabelaLembretes>
                             <LinhaEspacamento/>

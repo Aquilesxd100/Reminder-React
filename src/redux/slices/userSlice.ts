@@ -16,7 +16,7 @@ export const userSlice = createSlice({
             });
         },
         deleteAccount: (state, action : PayloadAction<string>) => {
-            const index : number = state.accounts.findIndex((account : AccountType) => account.username === action.payload);
+            const index : number = state.accounts.findIndex((account : AccountType) => account.id === action.payload);
             state.accounts.splice(index, 1);
         },
     }

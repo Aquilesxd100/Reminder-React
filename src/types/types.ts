@@ -52,7 +52,8 @@ export interface ErrorInputProp {
     helperText: string | boolean,
 };
 export interface HeaderProps {
-    userName: string
+    userName: string,
+    userID : string
 }
 export interface LembreteInfoType {
     id: string,
@@ -60,4 +61,11 @@ export interface LembreteInfoType {
     data: string,
     hora: string,
     descricao: string
+}
+export interface ModalManagerType {
+    showDeleteModalState: boolean,
+    showReminderModalState: boolean
+}
+export interface ModalExclusaoProp {
+    userID: string,
 }

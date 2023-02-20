@@ -59,7 +59,7 @@ function Login() {
         if (authentication === true) {
             let logInAccountID = accounts.filter((account : AccountType) => account.username === inputLogin).map((account : AccountType) => account.id);
             boxChecked === true ? dispatch(localLogIn(logInAccountID)) : dispatch(sessionLogIn(logInAccountID));
-            window.open('/recados', '_blank');
+            window.open('/recados', '_self');
         }
         else {
             setInputLoginProp(true);

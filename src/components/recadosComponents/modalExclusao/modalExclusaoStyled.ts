@@ -11,6 +11,9 @@ export const FundoModal = styled('div')(() => ({
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     zIndex: '1001',
+    pointerEvents: 'none',
+    opacity: '0',
+    transition: 'opacity 0.4s'
 }));
 export const MsgExclusao = styled('div')(() => ({
     border: '4px solid #75B6F8',

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderDiv, MiniLogo, PainelUsuario, InfoUsuario, IconeUsuario, BotaoSairDiv, BotaoExcluirDiv, BotaoPainel } from "./HeaderStyles";
 import miniLogoIMG from "../../images/logo_menor.png";
@@ -8,8 +9,11 @@ import { Typography } from "@mui/material";
 import { HeaderProps } from "../../types/types";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
+import ModalExclusao from "../recadosComponents/modalExclusao/ModalExclusao";
+import { showDeleteModal } from "../../redux/slices/modalManagerSlice";
 function Header(props : HeaderProps) {
     const dispatch = useDispatch();
+    
     function handleLogOut() {
         dispatch(localLogOut());
         dispatch(sessionLogOut());
@@ -17,6 +21,7 @@ function Header(props : HeaderProps) {
     }
     return(
         <HeaderDiv>
+            <ModalExclusao userID={props.userID} />
             <MiniLogo src={miniLogoIMG} />
             <PainelUsuario>
                 <InfoUsuario>
@@ -27,7 +32,7 @@ function Header(props : HeaderProps) {
                     <BotaoPainel onClick={(() => {handleLogOut()})} src={botaoDeslogarIMG} />
                 </BotaoSairDiv>
                 <BotaoExcluirDiv>
-                    <BotaoPainel onClick={(() => {})} src={botaoExcluirContaIMG} />
+                    <BotaoPainel onClick={(() => {dispatch(showDeleteModal())})} src={botaoExcluirContaIMG} />
                 </BotaoExcluirDiv>
             </PainelUsuario>
         </HeaderDiv>

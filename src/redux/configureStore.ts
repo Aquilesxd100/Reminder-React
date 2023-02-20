@@ -4,6 +4,7 @@ import userSliceReducer from "./slices/userSlice";
 import loggedSessionSliceReducer from "./slices/loggedSessionSlice";
 import notificationsSliceReducer from "./slices/notificationsSlice";
 import loggedLocalSliceReducer from "./slices/loggedLocalSlice";
+import modalManagerReducer from "./slices/modalManagerSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import storageSession from "redux-persist/lib/storage/session"
@@ -33,6 +34,7 @@ const store = configureStore({
         loggedLocalAccount: loggedLocalReducer,
         loggedSessionAccount: loggedSessionReducer,
         notifyAlert: notificationsReducer,
+        modalManager: modalManagerReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
