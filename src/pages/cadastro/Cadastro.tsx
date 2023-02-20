@@ -23,7 +23,7 @@ function Cadastro() {
     const [ authSupport, setAuthSupport] = useState(false);
     useEffect(() => {
         if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
-           /*  window.open("/recados", "_self"); */
+            window.open("/recados", "_self");
         }
     }, []);
     useEffect(() => {

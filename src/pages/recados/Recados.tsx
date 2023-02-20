@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Corpo } from "../../styles/global";
 import Header from "../../components/header/Header";
 import Lembrete from "../../components/recadosComponents/lembrete/Lembrete";
@@ -6,18 +8,39 @@ import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
 import ModalExclusao from "../../components/recadosComponents/modalExclusao/ModalExclusao";
+import { AccountType } from "../../types/types";
 function Recados() {
-const username = "teste"
-    const lembreteInfos = {
+    const { loggedSessionAccountID } = useSelector((state: any) => state.loggedSessionAccount);
+    const { loggedLocalAccountID } = useSelector((state: any) => state.loggedLocalAccount);
+    const { accounts } = useSelector((state: any) => state.users);
+    const userModel : AccountType = {
+        id: "",
+        username: "",
+        password: "",
+        reminders: []
+    }
+    const [user, setUser] = useState(userModel);
+    const [checkLoadPage, setCheckLoadPage] = useState(0);
+    useEffect(() => {
+        if (document.readyState === "complete") {
+            const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
+            const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
+            setUser(loggedAccount);
+        }
+        else {
+            setCheckLoadPage(checkLoadPage + 1);
+        }
+    }, [checkLoadPage]);
+/*     const lembreteInfos = {
         id: '263hasd',
         acao: 'Lavar a Louça',
         data: '15/06/1998',
         hora: '19:15',
         descricao: 'Lavar toda a louça e seca-la no final.'
-    };
+    }; */
     return (
         <Corpo sx={{height: '100vh'}}>
-            <Header userName={username} />
+            {user.username !== undefined && <Header userName={user.username} />}
             <RecadosDiv>
                 <BarraTituloTabela>
                     <TituloTabela>
@@ -41,7 +64,7 @@ const username = "teste"
                         {/* <ModalLembrete accountId={"dajdnnh323"} /> */}
                         <TabelaLembretes>
                             <LinhaEspacamento/>
-                            <Lembrete id={lembreteInfos.id} acao={lembreteInfos.acao} data={lembreteInfos.data} hora={lembreteInfos.hora} descricao={lembreteInfos.descricao} />
+                            {/* <Lembrete id={lembreteInfos.id} acao={lembreteInfos.acao} data={lembreteInfos.data} hora={lembreteInfos.hora} descricao={lembreteInfos.descricao} /> */}
                         </TabelaLembretes>
                     </Lembretes>
                 </SecaoLembretes>

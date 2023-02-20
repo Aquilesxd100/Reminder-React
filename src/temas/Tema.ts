@@ -4,7 +4,7 @@ export const temaPadrao = createTheme ({
         h5: { fontFamily: "hobo", textAlign: "center", color: '#84C1FF', textShadow: '1.5px 0 0 rgb(0, 0, 0), -1.5px 0 0 rgb(0, 0, 0), 0 1.5px 0 rgb(0, 0, 0),  0 -1.5px 0 rgb(0, 0, 0),  0 0 1.5px rgb(0, 0, 0)', letterSpacing: '1px' },
         h2: { fontFamily: 'comic-b', fontSize: 'calc(23px + 1.5vw)', color: '#88c1f9', textShadow: '1.5px 0 0 rgb(0 0 0), -1.5px 0 0 rgb(0 0 0), 0 1.5px 0 rgb(0 0 0), 0 -1.5px 0 rgb(0 0 0), 0 0 1.5px rgb(0 0 0)', '@media screen and (max-width: 767px)' : {
         fontSize: 'calc(15px + 1.8vw)'},},
-        h3: { fontFamily: "comic", textShadow: '1.5px 0 0 rgb(0 0 0), -1.5px 0 0 rgb(0 0 0), 0 1.5px 0 rgb(0 0 0), 0 -1.5px 0 rgb(0 0 0), 0 0 1.5px rgb(0 0 0)', color: '#79BCFF', fontSize: 'calc(10px + 1vw)', margin: '5px 5px 5px 5px',
+        h3: { fontFamily: "comic", textShadow: '1.3px 0 0 rgb(0 0 0), -1.3px 0 0 rgb(0 0 0), 0 1.3px 0 rgb(0 0 0), 0 -1.3px 0 rgb(0 0 0), 0 0 1.3px rgb(0 0 0)', color: '#79BCFF', fontSize: 'calc(10px + 1vw)', margin: '5px 5px 5px 5px',
         letterSpacing: '0.5px', '@media screen and (max-width: 767px)' : {
         textShadow: '1.2px 0 0 rgb(0 0 0), -1.2px 0 0 rgb(0 0 0), 0 1.2px 0 rgb(0 0 0), 0 -1.2px 0 rgb(0 0 0), 0 0 1.2px rgb(0 0 0)',
         fontSize: 'calc(16px + 1vw)'

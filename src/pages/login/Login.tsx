@@ -53,13 +53,13 @@ function Login() {
         alertDefault.current.style.pointerEvents = "none";
         alertDefault.current.style.opacity = "0"; 
     }
-    const checkBox : any = useRef();
+    const [boxChecked, setBoxChecked] = useState(true);
     function handleUser() {
         const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
         if (authentication === true) {
-            let logInAccount = accounts.filter((account : AccountType) => account.username === inputLogin).map((account : AccountType) => account.username);
-            alert(checkBox.current.checked);
-            checkBox.current.checked === true ? dispatch(localLogIn(logInAccount)) : dispatch(sessionLogIn(logInAccount));
+            let logInAccountID = accounts.filter((account : AccountType) => account.username === inputLogin).map((account : AccountType) => account.id);
+            boxChecked === true ? dispatch(localLogIn(logInAccountID)) : dispatch(sessionLogIn(logInAccountID));
+            window.open('/recados', '_blank');
         }
         else {
             setInputLoginProp(true);
@@ -81,7 +81,7 @@ function Login() {
                         <BotaoFormulario variant="contained" color="success" onClick={(() => { handleUser() })}>
                             Entrar
                         </BotaoFormulario>
-                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked ref={checkBox} />} label="Manter-me conectado" />
+                        <FormControlLabel sx={{ cursor: 'inherit' }} control={<Checkbox defaultChecked onChange={((event) => { setBoxChecked(event.target.checked)})} />} label="Manter-me conectado" />
                         <a href="/cadastro">
                             <Typography sx={{ marginTop: '-11px' }} variant="subtitle1">Criar Conta</Typography>
                         </a>
