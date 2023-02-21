@@ -19,22 +19,20 @@ function Recados() {
         username: "",
         password: "",
         reminders: []
-    }
+    };
+
     const [user, setUser] = useState(userModel);
-    const [checkLoadPage, setCheckLoadPage] = useState(0);
     useEffect(() => {
-        if (document.readyState === "complete") {
+        const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
+        const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
+        setUser(loggedAccount);
+    }, [accounts]);
+
+    useEffect(() => {
             if (loggedSessionAccountID === undefined && loggedLocalAccountID === undefined) {
                 window.open("/login", "_self");
             }
-            const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
-            const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
-            setUser(loggedAccount);
-        }
-        else {
-            setCheckLoadPage(checkLoadPage + 1);
-        }
-    }, [checkLoadPage]);
+    }, []);
     const dispatch = useDispatch();
     const [editReminderID, setEditReminderID] = useState("");
     function newReminderModal() {
@@ -48,7 +46,7 @@ function Recados() {
         descricao: 'Lavar toda a louça e seca-la no final.'
     }; */
     return (
-        <Corpo sx={{height: '100vh'}}>
+        <Corpo sx={{height: 'auto', minHeight: '100vh', paddingBottom: '20px'}}>
             <Header userID={user.id} userName={user.username} />
             <RecadosDiv>
                 <BarraTituloTabela>
@@ -71,6 +69,9 @@ function Recados() {
                         </AvisoLembreteVazio>}
                         <ModalLembrete accountId={user.id} reminderId={editReminderID} />
                         <TabelaLembretes>
+                            {!!user.reminders.length && user.reminders.map((reminder) => (
+                                <Lembrete key={reminder.id} accountId={user.id} id={reminder.id} acao={reminder.acao} data={reminder.data} hora={reminder.hora} descricao={reminder.descricao} />
+                            ))}
                             <LinhaEspacamento/>
                             {/* <Lembrete id={lembreteInfos.id} acao={lembreteInfos.acao} data={lembreteInfos.data} hora={lembreteInfos.hora} descricao={lembreteInfos.descricao} /> */}
                         </TabelaLembretes>

@@ -1,11 +1,23 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch } from 'react-redux';
+import { deleteReminder } from '../../../redux/slices/userSlice';
 import { LembreteInfoType } from "../../../types/types";
 import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
 import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
 function Lembrete(lembreteInfos : LembreteInfoType) {
+    const dispatch = useDispatch();
+
+    function deleteReminderHandle() {
+        const reminder = {
+            accountID : lembreteInfos.accountId,
+            reminderID : lembreteInfos.id
+        }
+        dispatch(deleteReminder(reminder));
+    }
     return(
         <>
+            <LinhaEspacamento/>
             <LembreteTBody>
                 <TrBasico>
                     <ThAcao><p><span>Ação:&nbsp;</span>{lembreteInfos.acao}</p></ThAcao>
@@ -15,7 +27,7 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                         <BotaoEdicao onClick={(() => {})} variant="outlined" size="medium">
                             <EditIcon />
                         </BotaoEdicao>
-                        <BotaoExcluir onClick={(() => {})} variant="outlined" size="medium">
+                        <BotaoExcluir onClick={(() => { deleteReminderHandle() })} variant="outlined" size="medium">
                             <DeleteIcon />
                         </BotaoExcluir>
                     </ThBotoesDesktop>
@@ -30,7 +42,7 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                         <BotaoEdicaoMobile onClick={(() => {})} variant="outlined" size="medium">
                             <EditIcon />
                         </BotaoEdicaoMobile>
-                        <BotaoExcluirMobile onClick={(() => {})} variant="outlined" size="medium">
+                        <BotaoExcluirMobile onClick={(() => { deleteReminderHandle() })} variant="outlined" size="medium">
                             <DeleteIcon />
                         </BotaoExcluirMobile>
                     </ThBotoesMobile>

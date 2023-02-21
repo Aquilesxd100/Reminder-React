@@ -31,9 +31,7 @@ function Login() {
     const { textAlert, typeAlert, currentState } = useSelector((state : any) => state.notifyAlert);
     const alertTypeProp: AlertColor = "success";
     const [alertType, setAlertType] = useState(alertTypeProp);
-    const [alertCheck, setAlertCheck] = useState(0);
     useEffect(() => {
-        if (document.readyState === 'complete') {
             if (textAlert !== "" && currentState === true) {
                 let alertStatus = {
                     typeAlert: typeAlert,
@@ -43,12 +41,8 @@ function Login() {
                 setAlertType(alertStatus.typeAlert);
                 setTimeout((() => {alertDefault.current.style.top = "0px";}), 650);
                 dispatch(disableNotification());
-            }
-        }
-        else {
-            setAlertCheck(alertCheck + 1); 
-        };
-    }, [alertCheck]);
+            };        
+    }, []);
     function closeAlert() {
         alertDefault.current.style.pointerEvents = "none";
         alertDefault.current.style.opacity = "0"; 

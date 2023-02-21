@@ -2,7 +2,7 @@ export interface AccountType {
     id: string,
     username: string,
     password: string,
-    reminders: Array<LembreteInfoType>
+    reminders: Array<LembreteType>
 };
 export interface AccountStorageType {
     accounts: Array<AccountType>,
@@ -51,7 +51,15 @@ export interface HeaderProps {
     userName: string,
     userID : string
 }
+export interface LembreteType {
+    id: string,
+    acao: string,
+    data: string,
+    hora: string,
+    descricao: string
+}
 export interface LembreteInfoType {
+    accountId: string,
     id: string,
     acao: string,
     data: string,

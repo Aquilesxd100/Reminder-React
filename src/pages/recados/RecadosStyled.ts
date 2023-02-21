@@ -94,9 +94,3 @@ export const Nuvemlembretes = styled('div')(() => ({
         padding: '17.5vw 4vw 11vw 4vw',
     }
 })); 
-export const ADA = styled('div')(() => ({
-    
-}));
-export const CS2 = styled('div')(() => ({
-    
-}));
