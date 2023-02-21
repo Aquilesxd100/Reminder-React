@@ -7,9 +7,10 @@ import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdic
 import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
-import { AccountType } from "../../types/types";
+import { AccountType, LembreteType } from "../../types/types";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 import { RootState } from "../../redux/configureStore";
+import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
 function Recados() {
     const dispatch = useDispatch();
     const { loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
@@ -21,8 +22,13 @@ function Recados() {
         password: "",
         reminders: []
     };
-
+    const reminderModel : Array<LembreteType> = [];
     const [user, setUser] = useState(userModel);
+    const [reminders, setReminders] = useState(reminderModel);
+    useEffect(() => {
+        const remindersByDateOrder : Array<LembreteType> = remindersOrganizer(user.reminders);
+        setReminders(remindersByDateOrder);
+    }, [user]);
     useEffect(() => {
         const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
         const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
@@ -65,7 +71,7 @@ function Recados() {
                         </AvisoLembreteVazio>}
                         <ModalLembrete accountId={user.id} />
                         <TabelaLembretes>
-                            {!!user.reminders.length && user.reminders.map((reminder) => (
+                            {!!reminders.length && reminders.map((reminder) => (
                                 <Lembrete key={reminder.id} accountId={user.id} id={reminder.id} acao={reminder.acao} data={reminder.data} hora={reminder.hora} descricao={reminder.descricao} />
                             ))}
                             <LinhaEspacamento/>
