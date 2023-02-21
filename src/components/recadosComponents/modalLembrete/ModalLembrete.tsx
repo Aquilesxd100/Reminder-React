@@ -8,6 +8,7 @@ import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global
 import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
 import { editReminder, newReminder } from "../../../redux/slices/userSlice";
 import { RootState } from "../../../redux/configureStore";
+import dateOrganizerBR from "../../../helpers/reminders/dateOrganizerBR";
 function ModalLembrete(lembreteInfo : ReminderInfos) {
     const { accounts } = useSelector((state : RootState) => state.users);
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 const accountIndex = accounts.findIndex((account : AccountType) => account.id === lembreteInfo.accountId);
                 const reminder : any = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);               
                 inputAcao.current.value = reminder.acao;
-                inputData.current.value = reminder.data;
+                inputData.current.value = dateOrganizerBR(reminder.data, "NA-Format");
                 inputHora.current.value = reminder.hora;
                 inputDescricao.current.value = reminder.descricao;
             }
@@ -55,7 +56,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             dispatch(newReminder({
                 accountID: lembreteInfo.accountId,
                 acao: inputAcao.current.value,
-                data: inputData.current.value,
+                data: dateOrganizerBR(inputData.current.value, "BR-Format"),
                 hora: inputHora.current.value,
                 descricao: inputDescricao.current.value,
             }));
@@ -66,7 +67,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 reminderID: showReminderModalState.reminderEditID,
                 accountID: lembreteInfo.accountId,
                 acao: inputAcao.current.value,
-                data: inputData.current.value,
+                data: dateOrganizerBR(inputData.current.value, "BR-Format"),
                 hora: inputHora.current.value,
                 descricao: inputDescricao.current.value,
             }));
