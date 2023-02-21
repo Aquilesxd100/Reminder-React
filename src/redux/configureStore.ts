@@ -43,5 +43,6 @@ const store = configureStore({
 });
 const persistor = persistStore(store);
 export type UserStore = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export const useStoreDispatch: () => UserStore = useDispatch;
 export { store, persistor };

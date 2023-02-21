@@ -9,8 +9,9 @@ import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/Lin
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
 import { AccountType } from "../../types/types";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
+import { RootState } from "../../redux/configureStore";
 function Recados() {
-    const { loggedSessionAccountID } = useSelector((state: any) => state.loggedSessionAccount);
+    const { loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
     const { loggedLocalAccountID } = useSelector((state: any) => state.loggedLocalAccount);
     const { accounts } = useSelector((state: any) => state.users);
     const userModel : AccountType = {

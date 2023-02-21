@@ -12,9 +12,6 @@ import { localLogOut } from "../../../redux/slices/loggedLocalSlice";
 import { sessionLogOut } from "../../../redux/slices/loggedSessionSlice";
 import { setNotification } from "../../../redux/slices/notificationsSlice";
 function ModalExclusao(props: ModalExclusaoProp) {
-
-    const { accounts } = useSelector((state: any) => state.users);
-
     const dispatch = useDispatch();
     const modalVisualProps = {
         pointerEvents: 'none',
