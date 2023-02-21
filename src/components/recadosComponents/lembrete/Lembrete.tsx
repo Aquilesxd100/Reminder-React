@@ -2,12 +2,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from 'react-redux';
 import { deleteReminder } from '../../../redux/slices/userSlice';
+import { showReminderModal } from "../../../redux/slices/modalManagerSlice";
 import { LembreteInfoType } from "../../../types/types";
 import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
 import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
 function Lembrete(lembreteInfos : LembreteInfoType) {
     const dispatch = useDispatch();
 
+    function editReminderHandle() {
+        const reminderInfos = {
+            type: 'edit',
+            reminderEditID: lembreteInfos.id
+        }
+        dispatch(showReminderModal(reminderInfos));
+    }
     function deleteReminderHandle() {
         const reminder = {
             accountID : lembreteInfos.accountId,
@@ -24,7 +32,7 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                     <ThData><p><span>Data:&nbsp;</span>{lembreteInfos.data}</p></ThData>
                     <ThHora><p><span>Hora{"(s)"}:&nbsp;</span>{lembreteInfos.hora}</p></ThHora>
                     <ThBotoesDesktop>
-                        <BotaoEdicao onClick={(() => {})} variant="outlined" size="medium">
+                        <BotaoEdicao onClick={(() => { editReminderHandle() })} variant="outlined" size="medium">
                             <EditIcon />
                         </BotaoEdicao>
                         <BotaoExcluir onClick={(() => { deleteReminderHandle() })} variant="outlined" size="medium">
@@ -39,7 +47,7 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                 </TrDescricao>
                 <TrBotoesMobile>
                     <ThBotoesMobile>
-                        <BotaoEdicaoMobile onClick={(() => {})} variant="outlined" size="medium">
+                        <BotaoEdicaoMobile onClick={(() => { editReminderHandle() })} variant="outlined" size="medium">
                             <EditIcon />
                         </BotaoEdicaoMobile>
                         <BotaoExcluirMobile onClick={(() => { deleteReminderHandle() })} variant="outlined" size="medium">

@@ -2,13 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { AccountType, ReminderInfos } from "../../../types/types";
+import { AccountType, LembreteType, ReminderInfos } from "../../../types/types";
 import { FormularioLembrete, InputAcao, InputData, InputDescricao, InputHora, LabelInput, TabelaLembrete, ThAcao, ThData, ThDescricao, ThHora} from "./modalLembreteStyled";
 import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
 import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
-import { newReminder } from "../../../redux/slices/userSlice";
+import { editReminder, newReminder } from "../../../redux/slices/userSlice";
 import { RootState } from "../../../redux/configureStore";
 function ModalLembrete(lembreteInfo : ReminderInfos) {
+    const { accounts } = useSelector((state : RootState) => state.users);
     const dispatch = useDispatch();
 
     const modalVisualProps = {
@@ -16,7 +17,8 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
         opacity: '0',
     }
     const [modalVisual, setModalVisual] = useState(modalVisualProps);
-    const { showReminderModalState } = useSelector((state : any) => state.modalManager);
+    const { showReminderModalState } = useSelector((state : RootState) => state.modalManager);
+
     useEffect(() => {
         if (showReminderModalState.show) {
             if (showReminderModalState.type === "new") {
@@ -26,10 +28,12 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 inputDescricao.current.value = "";
             }
             else if (showReminderModalState.type === "edit") {
-                /* inputAcao.current.value = "";
-                inputData.current.value = "";
-                inputHora.current.value = "";
-                inputDescricao.current.value = ""; */
+                const accountIndex = accounts.findIndex((account : AccountType) => account.id === lembreteInfo.accountId);
+                const reminder : any = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);               
+                inputAcao.current.value = reminder.acao;
+                inputData.current.value = reminder.data;
+                inputHora.current.value = reminder.hora;
+                inputDescricao.current.value = reminder.descricao;
             }
             setModalVisual({
                 pointerEvents: 'auto',
@@ -57,7 +61,15 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             }));
         }
         else if (showReminderModalState.type === "edit") {
-
+            dispatch(hideReminderModal());
+            dispatch(editReminder({
+                reminderID: showReminderModalState.reminderEditID,
+                accountID: lembreteInfo.accountId,
+                acao: inputAcao.current.value,
+                data: inputData.current.value,
+                hora: inputHora.current.value,
+                descricao: inputDescricao.current.value,
+            }));
         };
     }
     return(

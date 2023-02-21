@@ -11,6 +11,7 @@ import { AccountType } from "../../types/types";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 import { RootState } from "../../redux/configureStore";
 function Recados() {
+    const dispatch = useDispatch();
     const { loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
     const { loggedLocalAccountID } = useSelector((state: any) => state.loggedLocalAccount);
     const { accounts } = useSelector((state: any) => state.users);
@@ -33,18 +34,13 @@ function Recados() {
                 window.open("/login", "_self");
             }
     }, []);
-    const dispatch = useDispatch();
-    const [editReminderID, setEditReminderID] = useState("");
     function newReminderModal() {
-        dispatch(showReminderModal("new"));
+        const reminderInfos = {
+            type: 'new',
+            reminderEditID: ""
+        }
+        dispatch(showReminderModal(reminderInfos));
     };
-/*     const lembreteInfos = {
-        id: '263hasd',
-        acao: 'Lavar a Louça',
-        data: '15/06/1998',
-        hora: '19:15',
-        descricao: 'Lavar toda a louça e seca-la no final.'
-    }; */
     return (
         <Corpo sx={{height: 'auto', minHeight: '100vh', paddingBottom: '20px'}}>
             <Header userID={user.id} userName={user.username} />
@@ -67,13 +63,12 @@ function Recados() {
                                 <Typography variant="subtitle2">Clique em "adicionar" para criar um!</Typography>
                             </Nuvemlembretes>
                         </AvisoLembreteVazio>}
-                        <ModalLembrete accountId={user.id} reminderId={editReminderID} />
+                        <ModalLembrete accountId={user.id} />
                         <TabelaLembretes>
                             {!!user.reminders.length && user.reminders.map((reminder) => (
                                 <Lembrete key={reminder.id} accountId={user.id} id={reminder.id} acao={reminder.acao} data={reminder.data} hora={reminder.hora} descricao={reminder.descricao} />
                             ))}
                             <LinhaEspacamento/>
-                            {/* <Lembrete id={lembreteInfos.id} acao={lembreteInfos.acao} data={lembreteInfos.data} hora={lembreteInfos.hora} descricao={lembreteInfos.descricao} /> */}
                         </TabelaLembretes>
                     </Lembretes>
                 </SecaoLembretes>

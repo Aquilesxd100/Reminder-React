@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModalManagerType } from "../../types/types";
+import { ModalManagerType, ReminderModalType } from "../../types/types";
 const initialState : ModalManagerType = {
     showDeleteModalState: false,
     showReminderModalState: {
         type: "",
-        show: false
+        show: false,
+        reminderEditID: ""
     }
 }
 export const modalManagerSlice = createSlice({
@@ -17,9 +18,12 @@ export const modalManagerSlice = createSlice({
         hideDeleteModal: (state) => {
             state.showDeleteModalState = false;
         },
-        showReminderModal: (state, action : PayloadAction<string>) => {
-            state.showReminderModalState.type = action.payload;
+        showReminderModal: (state, action : PayloadAction<ReminderModalType>) => {
+            state.showReminderModalState.type = action.payload.type;
             state.showReminderModalState.show = true;
+            if (action.payload.type === 'edit') {
+                state.showReminderModalState.reminderEditID = action.payload.reminderEditID;
+            };
         },
         hideReminderModal: (state) => {
             state.showReminderModalState.show = false;

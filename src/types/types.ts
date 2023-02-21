@@ -26,7 +26,6 @@ export interface LoggedUserID {
     id: string
 }
 export interface ReminderInfos {
-    reminderId: string,
     accountId: string
 }
 export interface NewUserType {
@@ -80,11 +79,16 @@ export interface ExcluirLembreteType {
 }
 export interface ReminderModalStateType {
     type: string,
-    show: boolean
+    show: boolean,
+    reminderEditID: string
+}
+export interface ReminderModalType {
+    type: string,
+    reminderEditID: string
 }
 export interface ModalManagerType {
     showDeleteModalState: boolean,
-    showReminderModalState: ReminderModalStateType
+    showReminderModalState: ReminderModalStateType,
 }
 export interface ModalExclusaoProp {
     userID: string,
