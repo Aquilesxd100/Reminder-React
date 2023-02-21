@@ -9,6 +9,7 @@ import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
 import { editReminder, newReminder } from "../../../redux/slices/userSlice";
 import { RootState } from "../../../redux/configureStore";
 import dateOrganizerBR from "../../../helpers/reminders/dateOrganizerBR";
+import initialUpperLetter from "../../../helpers/reminders/initialUpperLetter";
 function ModalLembrete(lembreteInfo : ReminderInfos) {
     const { accounts } = useSelector((state : RootState) => state.users);
     const dispatch = useDispatch();
@@ -55,10 +56,10 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
         if (showReminderModalState.type === "new") {
             dispatch(newReminder({
                 accountID: lembreteInfo.accountId,
-                acao: inputAcao.current.value,
+                acao: initialUpperLetter(inputAcao.current.value),
                 data: dateOrganizerBR(inputData.current.value, "BR-Format"),
                 hora: inputHora.current.value,
-                descricao: inputDescricao.current.value,
+                descricao: initialUpperLetter(inputDescricao.current.value),
             }));
         }
         else if (showReminderModalState.type === "edit") {
@@ -66,10 +67,10 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             dispatch(editReminder({
                 reminderID: showReminderModalState.reminderEditID,
                 accountID: lembreteInfo.accountId,
-                acao: inputAcao.current.value,
+                acao: initialUpperLetter(inputAcao.current.value),
                 data: dateOrganizerBR(inputData.current.value, "BR-Format"),
                 hora: inputHora.current.value,
-                descricao: inputDescricao.current.value,
+                descricao: initialUpperLetter(inputDescricao.current.value),
             }));
         };
     }
