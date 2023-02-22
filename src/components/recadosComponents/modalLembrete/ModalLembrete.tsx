@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { AccountType, LembreteType, ReminderInfos } from "../../../types/types";
+import { AccountType, LembreteType, MinimumDateType, ReminderInfos } from "../../../types/types";
 import { FormularioLembrete, InputAcao, InputData, InputDescricao, InputHora, LabelInput, TabelaLembrete, ThAcao, ThData, ThDescricao, ThHora} from "./modalLembreteStyled";
 import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
 import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
@@ -10,6 +10,8 @@ import { editReminder, newReminder } from "../../../redux/slices/userSlice";
 import { RootState } from "../../../redux/configureStore";
 import dateOrganizerBR from "../../../helpers/reminders/dateOrganizerBR";
 import initialUpperLetter from "../../../helpers/reminders/initialUpperLetter";
+import setMinimumHour from "../../../helpers/reminders/setMinimumHour";
+import setMinimumDate from "../../../helpers/reminders/setMinimumDate";
 function ModalLembrete(lembreteInfo : ReminderInfos) {
     const { accounts } = useSelector((state : RootState) => state.users);
     const dispatch = useDispatch();
@@ -41,10 +43,12 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 pointerEvents: 'auto',
                 opacity: '1',  
             });
+            inputData.current.setAttribute("min", setMinimumDate());
         }
         else {
             setModalVisual(modalVisualProps);
         }
+
     }, [showReminderModalState])
 
     const inputAcao : any = useRef();    
@@ -74,6 +78,10 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             }));
         };
     }
+    function inputDateHandle(inputDateValue : string) {
+        const dateHandle : MinimumDateType = setMinimumHour(inputDateValue);
+        dateHandle.type === "set" ? inputHora.current.setAttribute('min', dateHandle.minDate) : inputHora.current.removeAttribute('min');
+    }
     return(
         <FormularioLembrete onSubmit={((event) => { event.preventDefault(); submitHandle() })} sx={modalVisual}>
             <TabelaLembrete>
@@ -85,7 +93,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                         </ThAcao>
                         <ThData>
                             <LabelInput htmlFor="input-data">Data:&nbsp;</LabelInput>
-                            <InputData ref={inputData} type="date" required autoComplete="off" id="input-data" maxLength={8} max="2100-11-23" />
+                            <InputData onChange={((event) => { inputDateHandle(event.target.value) })} ref={inputData} type="date" required autoComplete="off" id="input-data" maxLength={8} max="2100-10-10" />
                         </ThData>
                         <ThHora>
                             <LabelInput htmlFor="input-hora">Hora:&nbsp;</LabelInput>

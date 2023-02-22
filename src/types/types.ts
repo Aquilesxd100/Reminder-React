@@ -93,3 +93,7 @@ export interface ModalManagerType {
 export interface ModalExclusaoProp {
     userID: string,
 }
+export interface MinimumDateType {
+    type: string,
+    minDate: string
+}
