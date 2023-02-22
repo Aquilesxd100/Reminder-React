@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { AlertColor, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/footer/Footer";
 import GridLogo from "../../components/logo/GridLogo";
-import { AccountType, ErrorInputProp } from "../../types/types";
-import userValidation from "../../helpers/logIn/validations";
-import { useDispatch, useSelector } from "react-redux";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { AlertCustom } from "./LoginStyled";
+import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
+import { RootState } from "../../redux/configureStore";
+import { ErrorInputProp } from "../../types/otherTypes";
+import { AccountType } from "../../types/userTypes"
+import userValidation from "../../helpers/logIn/validations";
 import { disableNotification } from "../../redux/slices/notificationsSlice";
 import { localLogIn } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogIn } from "../../redux/slices/loggedSessionSlice";
@@ -16,9 +18,9 @@ function Login() {
         error: false,
         helperText: "",
     };
-    const { accounts } = useSelector((state : any) => state.users);
-    const { loggedLocalAccountID } = useSelector((state : any) => state.loggedLocalAccount);
-    const { loggedSessionAccountID } = useSelector((state : any) => state.loggedSessionAccount);
+    const { accounts } = useSelector((state : RootState) => state.users);
+    const { loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
+    const { loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
     const [inputPasswordProp, setInputPasswordProp] = useState(errorAndInfoProp);
     const [inputLogin, setInputLogin] = useState("");
@@ -28,8 +30,8 @@ function Login() {
             window.open("/recados", "_self");
         }
     }, []);
-    const { textAlert, typeAlert, currentState } = useSelector((state : any) => state.notifyAlert);
-    const alertTypeProp: AlertColor = "success";
+    const { textAlert, typeAlert, currentState } = useSelector((state : RootState) => state.notifyAlert);
+    const alertTypeProp: any = "success";
     const [alertType, setAlertType] = useState(alertTypeProp);
     useEffect(() => {
             if (textAlert !== "" && currentState === true) {

@@ -1,4 +1,4 @@
-import { MinimumDateType } from "../../types/types";
+import { MinimumDateType } from "../../types/otherTypes";
 
 export default function setMinimumHour(inputDate : string) : MinimumDateType {
     const minimumDate : MinimumDateType = {

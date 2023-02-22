@@ -1,4 +1,4 @@
-import { AccountType } from "../../types/types";
+import { AccountType } from "../../types/userTypes";
 export default function userValidation(userName : string, accounts : Array<AccountType>):string | boolean {
     let validation : string | boolean = true;
     if (accounts.length) {

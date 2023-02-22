@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NewUserType, AccountStorageType, AccountType, NovoLembreteType, ExcluirLembreteType, EditarLembreteType } from "../../types/types";
+import { NovoLembreteType, ExcluirLembreteType, EditarLembreteType } from "../../types/reminderTypes";
+import { NewUserType, AccountStorageType, AccountType } from "../../types/userTypes";
 const initialState : AccountStorageType = {
     accounts: [],
 };

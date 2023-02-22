@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { SessionStorageType } from "../../types/types"
+import { SessionStorageType } from "../../types/userTypes"
 const initialState : SessionStorageType = {
     loggedSessionAccountID: undefined,
 };

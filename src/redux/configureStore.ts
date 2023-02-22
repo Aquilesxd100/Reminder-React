@@ -1,13 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session"
 import userSliceReducer from "./slices/userSlice";
 import loggedSessionSliceReducer from "./slices/loggedSessionSlice";
 import notificationsSliceReducer from "./slices/notificationsSlice";
 import loggedLocalSliceReducer from "./slices/loggedLocalSlice";
 import modalManagerReducer from "./slices/modalManagerSlice";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import storageSession from "redux-persist/lib/storage/session"
 const usersStorageConfig = {
     key: 'accounts',
     storage,  

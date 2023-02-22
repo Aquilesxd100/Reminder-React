@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LocalStorageType } from "../../types/types";
+import { LocalStorageType } from "../../types/userTypes";
 const initialState : LocalStorageType= {
     loggedLocalAccountID: undefined,
 };

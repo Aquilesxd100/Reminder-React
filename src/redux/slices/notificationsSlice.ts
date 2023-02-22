@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AlertStorageType } from "../../types/types";
+import { AlertStorageType } from "../../types/otherTypes";
 const initialState : AlertStorageType = {
     textAlert: "",
     typeAlert: "",

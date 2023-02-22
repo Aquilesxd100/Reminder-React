@@ -1,4 +1,4 @@
-import { LembreteType } from "../../types/types";
+import { LembreteType } from "../../types/reminderTypes";
 
 export default function remindersOrganizer(reminders : Array<LembreteType>) : Array<LembreteType> {
     let filteredReminders : Array<LembreteType> = [];

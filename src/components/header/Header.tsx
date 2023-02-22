@@ -6,10 +6,10 @@ import perfilUsuarioIMG from "../../images/icone-usuario.png";
 import botaoDeslogarIMG from "../../images/erro.png";
 import botaoExcluirContaIMG from "../../images/exclusao.png";
 import { Typography } from "@mui/material";
-import { HeaderProps } from "../../types/types";
+import ModalExclusao from "../recadosComponents/modalExclusao/ModalExclusao";
+import { HeaderProps } from "../../types/otherTypes";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
-import ModalExclusao from "../recadosComponents/modalExclusao/ModalExclusao";
 import { showDeleteModal } from "../../redux/slices/modalManagerSlice";
 function Header(props : HeaderProps) {
     const dispatch = useDispatch();

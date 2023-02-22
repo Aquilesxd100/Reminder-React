@@ -1,11 +1,11 @@
+import { useDispatch } from 'react-redux';
+import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useDispatch } from 'react-redux';
+import { LembreteInfoType } from "../../../types/reminderTypes";
+import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
 import { deleteReminder } from '../../../redux/slices/userSlice';
 import { showReminderModal } from "../../../redux/slices/modalManagerSlice";
-import { LembreteInfoType } from "../../../types/types";
-import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
-import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
 function Lembrete(lembreteInfos : LembreteInfoType) {
     const dispatch = useDispatch();
 

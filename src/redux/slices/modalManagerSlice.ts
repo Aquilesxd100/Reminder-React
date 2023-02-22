@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModalManagerType, ReminderModalType } from "../../types/types";
+import { ModalManagerType} from "../../types/otherTypes";
+import { ReminderModalType  } from "../../types/reminderTypes";
 const initialState : ModalManagerType = {
     showDeleteModalState: false,
     showReminderModalState: {

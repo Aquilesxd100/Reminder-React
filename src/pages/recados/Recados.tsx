@@ -3,19 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { Corpo } from "../../styles/global";
 import Header from "../../components/header/Header";
 import Lembrete from "../../components/recadosComponents/lembrete/Lembrete";
-import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes, AvisoLembreteVazio, Nuvemlembretes } from "./RecadosStyled";
 import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
-import { AccountType, LembreteType } from "../../types/types";
-import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 import { RootState } from "../../redux/configureStore";
+import { AccountType } from "../../types/userTypes";
+import { LembreteType } from "../../types/reminderTypes";
+import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes, AvisoLembreteVazio, Nuvemlembretes } from "./RecadosStyled";
 import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
+import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 function Recados() {
     const dispatch = useDispatch();
     const { loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
-    const { loggedLocalAccountID } = useSelector((state: any) => state.loggedLocalAccount);
-    const { accounts } = useSelector((state: any) => state.users);
+    const { loggedLocalAccountID } = useSelector((state: RootState) => state.loggedLocalAccount);
+    const { accounts } = useSelector((state: RootState) => state.users);
     const userModel : AccountType = {
         id: "",
         username: "",
@@ -36,9 +37,9 @@ function Recados() {
     }, [accounts]);
 
     useEffect(() => {
-            if (loggedSessionAccountID === undefined && loggedLocalAccountID === undefined) {
-                window.open("/login", "_self");
-            }
+        if (loggedSessionAccountID === undefined && loggedLocalAccountID === undefined) {
+            window.open("/login", "_self");
+        }
     }, []);
     function newReminderModal() {
         const reminderInfos = {

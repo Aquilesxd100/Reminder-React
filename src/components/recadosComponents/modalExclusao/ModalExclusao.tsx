@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { FundoModal, MsgExclusao } from "./modalExclusaoStyled";
-import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
+import { useSelector, useDispatch } from "react-redux";
+import { Typography } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { ModalExclusaoProp } from "../../../types/types";
+import { FundoModal, MsgExclusao } from "./modalExclusaoStyled";
+import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
+import { ModalExclusaoProp } from "../../../types/otherTypes";
+import { RootState } from "../../../redux/configureStore";
 import { hideDeleteModal } from "../../../redux/slices/modalManagerSlice";
 import { deleteAccount } from "../../../redux/slices/userSlice";
 import { localLogOut } from "../../../redux/slices/loggedLocalSlice";
@@ -18,7 +19,7 @@ function ModalExclusao(props: ModalExclusaoProp) {
         opacity: '0',
     }
     const [modalVisual, setModalVisual] = useState(modalVisualProps);
-    const { showDeleteModalState } = useSelector((state : any) => state.modalManager);
+    const { showDeleteModalState } = useSelector((state : RootState) => state.modalManager);
     useEffect(() => {
         if (showDeleteModalState) {
             setModalVisual({

@@ -2,16 +2,19 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { AccountType, LembreteType, MinimumDateType, ReminderInfos } from "../../../types/types";
+import { RootState } from "../../../redux/configureStore";
+import { AccountType } from "../../../types/userTypes";
+import { LembreteType, ReminderInfos } from "../../../types/reminderTypes";
+import { MinimumDateType } from "../../../types/otherTypes";
 import { FormularioLembrete, InputAcao, InputData, InputDescricao, InputHora, LabelInput, TabelaLembrete, ThAcao, ThData, ThDescricao, ThHora} from "./modalLembreteStyled";
 import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
-import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
-import { editReminder, newReminder } from "../../../redux/slices/userSlice";
-import { RootState } from "../../../redux/configureStore";
 import dateOrganizerBR from "../../../helpers/reminders/dateOrganizerBR";
 import initialUpperLetter from "../../../helpers/reminders/initialUpperLetter";
 import setMinimumHour from "../../../helpers/reminders/setMinimumHour";
 import setMinimumDate from "../../../helpers/reminders/setMinimumDate";
+import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
+import { editReminder, newReminder } from "../../../redux/slices/userSlice";
+
 function ModalLembrete(lembreteInfo : ReminderInfos) {
     const { accounts } = useSelector((state : RootState) => state.users);
     const dispatch = useDispatch();
@@ -33,7 +36,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             }
             else if (showReminderModalState.type === "edit") {
                 const accountIndex = accounts.findIndex((account : AccountType) => account.id === lembreteInfo.accountId);
-                const reminder : any = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);               
+                const reminder : LembreteType = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);               
                 inputAcao.current.value = reminder.acao;
                 inputData.current.value = dateOrganizerBR(reminder.data, "NA-Format");
                 inputHora.current.value = reminder.hora;
@@ -79,6 +82,7 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
         };
     }
     function inputDateHandle(inputDateValue : string) {
+        if(!inputHora.current) return;
         const dateHandle : MinimumDateType = setMinimumHour(inputDateValue);
         dateHandle.type === "set" ? inputHora.current.setAttribute('min', dateHandle.minDate) : inputHora.current.removeAttribute('min');
     }
