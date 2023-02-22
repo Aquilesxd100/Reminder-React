@@ -45,7 +45,7 @@ function Cadastro() {
             passwordError: true,
             password2Error: true,
         }
-        if (validacaoUserName === true && validacaoPassword === true) {
+        if (validacaoUserName === true && validacaoPassword === true && validacaoPassword2 === true) {
             const alertContent : AlertType = {
                 textAlert: "Conta criada com sucesso!",
                 typeAlert: "success",

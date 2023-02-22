@@ -32,8 +32,7 @@ function Recados() {
     }, [user]);
     useEffect(() => {
         const loggedAccountID : string | undefined = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
-        if(loggedAccountID === undefined)return;
-        const loggedAccount : AccountType | undefined = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
+        const loggedAccount : AccountType | undefined = accounts.find((account : AccountType) => account.id === loggedAccountID);
         if(loggedAccount === undefined)return;
         setUser(loggedAccount);
     }, [accounts]);
