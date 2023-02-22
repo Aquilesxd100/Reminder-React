@@ -36,7 +36,8 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
             }
             else if (showReminderModalState.type === "edit") {
                 const accountIndex = accounts.findIndex((account : AccountType) => account.id === lembreteInfo.accountId);
-                const reminder : LembreteType = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);               
+                const reminder : LembreteType | undefined = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);
+                if(reminder === undefined)return;               
                 inputAcao.current.value = reminder.acao;
                 inputData.current.value = dateOrganizerBR(reminder.data, "NA-Format");
                 inputHora.current.value = reminder.hora;

@@ -53,8 +53,9 @@ function Login() {
     function handleUser() {
         const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
         if (authentication === true) {
-            let logInAccountID = accounts.filter((account : AccountType) => account.username === inputLogin).map((account : AccountType) => account.id);
-            boxChecked === true ? dispatch(localLogIn(logInAccountID)) : dispatch(sessionLogIn(logInAccountID));
+            let logInAccount : AccountType | undefined = accounts.find((account : AccountType) => account.username === inputLogin);
+            if(logInAccount === undefined)return;
+            boxChecked === true ? dispatch(localLogIn(logInAccount.id)) : dispatch(sessionLogIn(logInAccount.id));
             window.open('/recados', '_self');
         }
         else {

@@ -31,8 +31,10 @@ function Recados() {
         setReminders(remindersByDateOrder);
     }, [user]);
     useEffect(() => {
-        const loggedAccountID : string = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
-        const loggedAccount : AccountType = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
+        const loggedAccountID : string | undefined = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
+        if(loggedAccountID === undefined)return;
+        const loggedAccount : AccountType | undefined = accounts.find((account : AccountType) => account.id === loggedAccountID[0]);
+        if(loggedAccount === undefined)return;
         setUser(loggedAccount);
     }, [accounts]);
 
