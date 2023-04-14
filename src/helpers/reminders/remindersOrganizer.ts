@@ -10,7 +10,7 @@ export default function remindersOrganizer(reminders : Array<LembreteType>) : Ar
             if (minute < earlierMinute) {
                 earlierMinute = minute;
                 earlierReminder = reminder;
-            }
+            };
         }
         filteredReminders.push(earlierReminder)
         reminders = reminders.filter((lembrete) => lembrete.id !== earlierReminder.id);

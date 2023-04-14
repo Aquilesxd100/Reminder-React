@@ -9,11 +9,11 @@ import { AlertType, ErrorAuthType, ErrorInputProp } from "../../types/otherTypes
 import userValidation from "../../helpers/newAccount/userValidationCreation";
 import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
 import { RootState, useStoreDispatch } from "../../redux/configureStore";
-import { newAccount } from "../../redux/slices/userSlice";
 import { setNotification } from "../../redux/slices/notificationsSlice";
+import { createAccountRequest } from "../../redux/slices/newAccountSlice";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
-    const { accounts } = useSelector((state : RootState) => state.users);
+    const { error } = useSelector((state : RootState) => state.newAccount);
     const { loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
     const { currentState } = useSelector((state : RootState) => state.notifyAlert);
@@ -28,16 +28,31 @@ function Cadastro() {
     }, []);
     useEffect(() => {
         if (currentState === true) {
-            setTimeout((() => {window.open("/login", "_self");}), 700);
+            setTimeout((() => {window.open("/login", "_self");}), 100);
         }
     }, [currentState]);
-    function handleUser() {
-        const newUser = {
-            username: login,
-            password: password,
-            repeatPassword: repeatPassword
+    useEffect(() => {
+        if (error === false) {
+            const alertContent : AlertType = {
+                textAlert: "Conta criada com sucesso!",
+                typeAlert: "success",
+            };
+            dispatch(setNotification(alertContent));
+        }
+        else if (error !== undefined) {
+            setInputErrors({
+                usernameError: error.errorType === "login"
+                ? error.errorMessage
+                : inputErrors.usernameError,
+                passwordError: error.errorType === "password"
+                ? error.errorMessage
+                : inputErrors.passwordError,
+                password2Error: inputErrors.password2Error,
+            });
         };
-        const validacaoUserName = userValidation(login, accounts);
+    }, [error])
+    function handleUser() {
+        const validacaoUserName = userValidation(login);
         const validacaoPassword = passwordValidation(password);
         const validacaoPassword2 = password === repeatPassword ? true : "A senha é diferente.";
         let erro : ErrorAuthType = {
@@ -46,12 +61,7 @@ function Cadastro() {
             password2Error: true,
         }
         if (validacaoUserName === true && validacaoPassword === true && validacaoPassword2 === true) {
-            const alertContent : AlertType = {
-                textAlert: "Conta criada com sucesso!",
-                typeAlert: "success",
-            };
-            dispatch(newAccount(newUser));
-            dispatch(setNotification(alertContent));           
+            dispatch(createAccountRequest({ username: login, password: password }));    
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
             setAuthSupport(true);
@@ -92,7 +102,7 @@ function Cadastro() {
     }, [inputErrors]);
     function checkError(inputType : string, inputValue : string):void {
         if (inputType === 'login' && authSupport) {
-            const validacaoUserName = userValidation(inputValue, accounts);
+            const validacaoUserName = userValidation(inputValue);
             validacaoUserName !== true
             ? setInputNameProp({ error: true, helperText: validacaoUserName })
             : setInputNameProp({ error: false, helperText: "" });

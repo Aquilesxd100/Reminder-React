@@ -8,6 +8,7 @@ import loggedSessionSliceReducer from "./slices/loggedSessionSlice";
 import notificationsSliceReducer from "./slices/notificationsSlice";
 import loggedLocalSliceReducer from "./slices/loggedLocalSlice";
 import modalManagerReducer from "./slices/modalManagerSlice";
+import newAccountReducer from "./slices/newAccountSlice";
 const usersStorageConfig = {
     key: 'accounts',
     storage,  
@@ -34,7 +35,8 @@ const store = configureStore({
         loggedLocalAccount: loggedLocalReducer,
         loggedSessionAccount: loggedSessionReducer,
         notifyAlert: notificationsReducer,
-        modalManager: modalManagerReducer
+        modalManager: modalManagerReducer,
+        newAccount: newAccountReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

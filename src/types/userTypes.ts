@@ -27,3 +27,16 @@ export interface LoginUserType {
     usernameError: string,
     passwordError: string,
 };
+
+
+export interface ErrorInfosType {
+    errorType: "login" | "password",
+    errorMessage: string
+};
+export interface NewAccountStorageType {
+    error: undefined | ErrorInfosType | false,
+};
+export interface NewAccountType {
+    username: string,
+    password: string
+};
