@@ -10,10 +10,10 @@ export interface AccountStorageType {
     accounts: Array<AccountType>,
 };
 export interface SessionStorageType {
-    loggedSessionAccountID: string | undefined
+    loggedSessionAccountToken: string | undefined
 };
 export interface LocalStorageType {
-    loggedLocalAccountID: string | undefined
+    loggedLocalAccountToken: string | undefined
 };
 export interface NewUserType {
     username: string,

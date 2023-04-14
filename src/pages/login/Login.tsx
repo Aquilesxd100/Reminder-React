@@ -19,8 +19,8 @@ function Login() {
         helperText: "",
     };
     const { accounts } = useSelector((state : RootState) => state.users);
-    const { loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
-    const { loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
+    const { loggedLocalAccountToken: loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
+    const { loggedSessionAccountToken: loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
     const [inputPasswordProp, setInputPasswordProp] = useState(errorAndInfoProp);
     const [inputLogin, setInputLogin] = useState("");

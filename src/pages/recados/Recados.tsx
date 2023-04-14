@@ -14,8 +14,8 @@ import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 function Recados() {
     const dispatch = useDispatch();
-    const { loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
-    const { loggedLocalAccountID } = useSelector((state: RootState) => state.loggedLocalAccount);
+    const { loggedSessionAccountToken: loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
+    const { loggedLocalAccountToken: loggedLocalAccountID } = useSelector((state: RootState) => state.loggedLocalAccount);
     const { accounts } = useSelector((state: RootState) => state.users);
     const userModel : AccountType = {
         id: "",

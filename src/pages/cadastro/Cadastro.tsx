@@ -14,15 +14,15 @@ import { createAccountRequest } from "../../redux/slices/newAccountSlice";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
     const { error } = useSelector((state : RootState) => state.newAccount);
-    const { loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
-    const { loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
+    const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
+    const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const { currentState } = useSelector((state : RootState) => state.notifyAlert);
     const [ login, setLogin ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ repeatPassword, setRepeatPassword ] = useState("");
     const [ authSupport, setAuthSupport] = useState(false);
     useEffect(() => {
-        if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
+        if (loggedLocalAccountToken !== undefined || loggedSessionAccountToken !== undefined) {
             window.open("/recados", "_self");
         }
     }, []);
