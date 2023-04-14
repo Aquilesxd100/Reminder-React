@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { NewAccountStorageType, NewAccountType } from "../../types/userTypes";
+import { AccountStatusType, AccountInfosType } from "../../types/userTypes";
 import { apiURL } from "../../helpers/requestsData";
 
 export const createAccountRequest = createAsyncThunk(
     "",
-    async (newAccount : NewAccountType, thunkAPI) => {
+    async (newAccount : AccountInfosType, thunkAPI) => {
         const response = await fetch(`${apiURL}/newuser/${newAccount.username}/${newAccount.password}`, {
             method: "POST",
             headers: {
@@ -18,7 +18,7 @@ export const createAccountRequest = createAsyncThunk(
     }
 );
 
-const initialState : NewAccountStorageType = {
+const initialState : AccountStatusType = {
     error: undefined,
 };
 export const newAccountSlice = createSlice({

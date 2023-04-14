@@ -33,10 +33,14 @@ export interface ErrorInfosType {
     errorType: "login" | "password",
     errorMessage: string
 };
-export interface NewAccountStorageType {
+export interface AccountStatusType {
     error: undefined | ErrorInfosType | false,
 };
-export interface NewAccountType {
+export interface LogInStatusType {
+    error: undefined | ErrorInfosType | false,
+    token: string | undefined
+};
+export interface AccountInfosType {
     username: string,
     password: string
 };
