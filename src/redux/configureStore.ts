@@ -11,6 +11,7 @@ import modalManagerReducer from "./slices/modalManagerSlice";
 import newAccountReducer from "./slices/newAccountSlice";
 import logInReducer from "./slices/logInSlice";
 import checkTokenReducer from "./slices/checkTokenSlice";
+import getUserNameReducer from "./slices/getUserNameSlice";
 const usersStorageConfig = {
     key: 'accounts',
     storage,  
@@ -41,6 +42,7 @@ const store = configureStore({
         loggedLocalAccount: loggedLocalReducer,
         loggedSessionAccount: loggedSessionReducer,
         checkToken: checkTokenReducer,
+        getUserName: getUserNameReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
