@@ -37,3 +37,21 @@ export interface ReminderModalType {
     type: string,
     reminderEditID: string
 }
+
+export interface InfosRequestReminders {
+    token: string,
+    searchInput?: string | undefined,
+    archivedBox: boolean,
+};
+
+export interface ReminderType {
+    id: string,
+    action: string,
+    date: string,
+    time: string,
+    description: string,
+    archived: boolean
+};
+export interface RemindersStorageType {
+    reminders: Array<ReminderType>
+};

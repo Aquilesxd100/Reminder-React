@@ -12,6 +12,7 @@ import newAccountReducer from "./slices/newAccountSlice";
 import logInReducer from "./slices/logInSlice";
 import checkTokenReducer from "./slices/checkTokenSlice";
 import getUserNameReducer from "./slices/getUserNameSlice";
+import remindersReducer from "./slices/remindersSlice";
 const usersStorageConfig = {
     key: 'accounts',
     storage,  
@@ -43,6 +44,7 @@ const store = configureStore({
         loggedSessionAccount: loggedSessionReducer,
         checkToken: checkTokenReducer,
         getUserName: getUserNameReducer,
+        reminders: remindersReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
