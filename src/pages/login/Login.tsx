@@ -8,7 +8,6 @@ import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } fr
 import { RootState, UserStore } from "../../redux/configureStore";
 import { ErrorInputProp, TokenAuthType } from "../../types/otherTypes";
 import { AccountInfosType, AccountType } from "../../types/userTypes"
-import userValidation from "../../helpers/logIn/validations";
 import { disableNotification } from "../../redux/slices/notificationsSlice";
 import { localLogIn, localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogIn, sessionLogOut } from "../../redux/slices/loggedSessionSlice";
@@ -43,7 +42,7 @@ function Login() {
             };
             dispatch(validTokenRequest(sessionToken));
         };
-    }, [loggedLocalAccountToken, loggedSessionAccountToken]);
+    }, []);
     useEffect(() => {
         if(checkedSessionToken === false) dispatch(sessionLogOut());
         if(checkedLocalToken === false) dispatch(localLogOut());

@@ -6,17 +6,47 @@ import Lembrete from "../../components/recadosComponents/lembrete/Lembrete";
 import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
-import { RootState } from "../../redux/configureStore";
+import { RootState, UserStore } from "../../redux/configureStore";
 import { AccountType } from "../../types/userTypes";
 import { LembreteType } from "../../types/reminderTypes";
 import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes, AvisoLembreteVazio, Nuvemlembretes } from "./RecadosStyled";
 import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
+import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
+import { localLogOut } from "../../redux/slices/loggedLocalSlice";
+import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
+import { TokenAuthType } from "../../types/otherTypes";
 function Recados() {
-    const dispatch = useDispatch();
-    const { loggedSessionAccountToken: loggedSessionAccountID } = useSelector((state: RootState) => state.loggedSessionAccount);
-    const { loggedLocalAccountToken: loggedLocalAccountID } = useSelector((state: RootState) => state.loggedLocalAccount);
+    const dispatch = useDispatch<UserStore>();
+    const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
+    const { loggedSessionAccountToken } = useSelector((state: RootState) => state.loggedSessionAccount);
+    const { loggedLocalAccountToken } = useSelector((state: RootState) => state.loggedLocalAccount);
     const { accounts } = useSelector((state: RootState) => state.users);
+
+    useEffect(() => {
+        if (loggedLocalAccountToken !== undefined) {
+            const localToken : TokenAuthType = {
+                token: loggedLocalAccountToken,
+                type: "local"
+            };
+            dispatch(validTokenRequest(localToken));
+        };
+        if(loggedSessionAccountToken !== undefined) {
+            const sessionToken : TokenAuthType = {
+                token: loggedSessionAccountToken,
+                type: "session"
+            };
+            dispatch(validTokenRequest(sessionToken));
+        };
+    }, []);
+    useEffect(() => {
+        if(checkedSessionToken === false) dispatch(sessionLogOut());
+        if(checkedLocalToken === false) dispatch(localLogOut());
+        if (checkedSessionToken === false || checkedLocalToken === false) {
+            setTimeout(() => { window.open("/login", "_self"); }, 350);
+        };
+    }, [checkedSessionToken, checkedLocalToken]);
+
     const userModel : AccountType = {
         id: "",
         username: "",
@@ -31,14 +61,14 @@ function Recados() {
         setReminders(remindersByDateOrder);
     }, [user]);
     useEffect(() => {
-        const loggedAccountID : string | undefined = loggedSessionAccountID !== undefined ? loggedSessionAccountID : loggedLocalAccountID;
+        const loggedAccountID : string | undefined = loggedSessionAccountToken !== undefined ? loggedSessionAccountToken : loggedLocalAccountToken;
         const loggedAccount : AccountType | undefined = accounts.find((account : AccountType) => account.id === loggedAccountID);
         if(loggedAccount === undefined)return;
         setUser(loggedAccount);
     }, [accounts]);
 
     useEffect(() => {
-        if (loggedSessionAccountID === undefined && loggedLocalAccountID === undefined) {
+        if (loggedSessionAccountToken === undefined && loggedLocalAccountToken === undefined) {
             window.open("/login", "_self");
         }
     }, []);
