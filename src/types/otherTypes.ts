@@ -25,11 +25,23 @@ export interface ModalManagerType {
 export interface MinimumDateType {
     type: string,
     minDate: string
-}
+};
 export interface HeaderProps {
     userName: string,
     userID : string
-}
+};
 export interface ModalExclusaoProp {
     userID: string,
-}
+};
+export interface TokensValidationType {
+    checkedSessionToken : undefined | boolean
+    checkedLocalToken : undefined | boolean
+};
+export interface TokenAuthType {
+    token : string,
+    type : "local" | "session"
+};
+export interface ValidTokenType {
+    validation : boolean,
+    type : "local" | "session"
+};

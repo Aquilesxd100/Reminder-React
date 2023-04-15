@@ -30,13 +30,13 @@ export const newAccountSlice = createSlice({
             if (action.payload.message === "Conta criada com sucesso!") {
                 state.error = false;
             }
-            else if (action.payload.message.search("login") !== -1) {
+            else if (action.payload.message && action.payload.message.search("login") !== -1) {
                 state.error = {
                     errorType: "login",
                     errorMessage: action.payload.message
                 };
             }
-            else if (action.payload.message.search("senha") !== -1) {
+            else if (action.payload.message && action.payload.message.search("senha") !== -1) {
                 state.error = {
                     errorType: "password",
                     errorMessage: action.payload.message

@@ -5,14 +5,18 @@ import Footer from "../../components/footer/Footer";
 import GridLogo from "../../components/logo/GridLogo";
 import { BlocoNotasCadastro } from "./CadastroStyled";
 import { Linha, Corpo, Formulario, InputPadrao, BotaoFormulario } from "../../styles/global";
-import { AlertType, ErrorAuthType, ErrorInputProp } from "../../types/otherTypes";
+import { AlertType, ErrorAuthType, ErrorInputProp, TokenAuthType } from "../../types/otherTypes";
 import userValidation from "../../helpers/newAccount/userValidationCreation";
 import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
 import { RootState, useStoreDispatch } from "../../redux/configureStore";
 import { setNotification } from "../../redux/slices/notificationsSlice";
 import { createAccountRequest } from "../../redux/slices/newAccountSlice";
+import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
+import { localLogOut } from "../../redux/slices/loggedLocalSlice";
+import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
+    const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
     const { error } = useSelector((state : RootState) => state.newAccount);
     const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
@@ -22,10 +26,28 @@ function Cadastro() {
     const [ repeatPassword, setRepeatPassword ] = useState("");
     const [ authSupport, setAuthSupport] = useState(false);
     useEffect(() => {
-        if (loggedLocalAccountToken !== undefined || loggedSessionAccountToken !== undefined) {
-            window.open("/recados", "_self");
-        }
-    }, []);
+        if (loggedLocalAccountToken !== undefined) {
+            const localToken : TokenAuthType = {
+                token: loggedLocalAccountToken,
+                type: "local"
+            };
+            dispatch(validTokenRequest(localToken));
+        };
+        if(loggedSessionAccountToken !== undefined) {
+            const sessionToken : TokenAuthType = {
+                token: loggedSessionAccountToken,
+                type: "session"
+            };
+            dispatch(validTokenRequest(sessionToken));
+        };
+    }, [loggedLocalAccountToken, loggedSessionAccountToken]);
+    useEffect(() => {
+        if(checkedSessionToken === false) dispatch(sessionLogOut());
+        if(checkedLocalToken === false) dispatch(localLogOut());
+        if (checkedSessionToken || checkedLocalToken) {
+            setTimeout(() => { window.open("/recados", "_self"); }, 350);
+        };
+    }, [checkedSessionToken, checkedLocalToken]);
     useEffect(() => {
         if (currentState === true) {
             setTimeout((() => {window.open("/login", "_self");}), 100);

@@ -5,31 +5,53 @@ import GridLogo from "../../components/logo/GridLogo";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { AlertCustom } from "./LoginStyled";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
-import { RootState } from "../../redux/configureStore";
-import { ErrorInputProp } from "../../types/otherTypes";
-import { AccountType } from "../../types/userTypes"
+import { RootState, UserStore } from "../../redux/configureStore";
+import { ErrorInputProp, TokenAuthType } from "../../types/otherTypes";
+import { AccountInfosType, AccountType } from "../../types/userTypes"
 import userValidation from "../../helpers/logIn/validations";
 import { disableNotification } from "../../redux/slices/notificationsSlice";
-import { localLogIn } from "../../redux/slices/loggedLocalSlice";
-import { sessionLogIn } from "../../redux/slices/loggedSessionSlice";
+import { localLogIn, localLogOut } from "../../redux/slices/loggedLocalSlice";
+import { sessionLogIn, sessionLogOut } from "../../redux/slices/loggedSessionSlice";
+import { logInRequest } from "../../redux/slices/logInSlice";
+import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
 function Login() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<UserStore>();
     const errorAndInfoProp : ErrorInputProp = {
         error: false,
         helperText: "",
     };
-    const { accounts } = useSelector((state : RootState) => state.users);
-    const { loggedLocalAccountToken: loggedLocalAccountID } = useSelector((state : RootState) => state.loggedLocalAccount);
-    const { loggedSessionAccountToken: loggedSessionAccountID } = useSelector((state : RootState) => state.loggedSessionAccount);
+    const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
+    const { error, token } = useSelector((state : RootState) => state.logIn);
+    const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
+    const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
     const [inputPasswordProp, setInputPasswordProp] = useState(errorAndInfoProp);
     const [inputLogin, setInputLogin] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     useEffect(() => {
-        if (loggedLocalAccountID !== undefined || loggedSessionAccountID !== undefined) {
-            window.open("/recados", "_self");
-        }
-    }, []);
+        if (loggedLocalAccountToken !== undefined) {
+            const localToken : TokenAuthType = {
+                token: loggedLocalAccountToken,
+                type: "local"
+            };
+            dispatch(validTokenRequest(localToken));
+        };
+        if(loggedSessionAccountToken !== undefined) {
+            const sessionToken : TokenAuthType = {
+                token: loggedSessionAccountToken,
+                type: "session"
+            };
+            dispatch(validTokenRequest(sessionToken));
+        };
+    }, [loggedLocalAccountToken, loggedSessionAccountToken]);
+    useEffect(() => {
+        if(checkedSessionToken === false) dispatch(sessionLogOut());
+        if(checkedLocalToken === false) dispatch(localLogOut());
+        if (checkedSessionToken || checkedLocalToken) {
+            setTimeout(() => { window.open("/recados", "_self"); }, 350);
+        };
+    }, [checkedSessionToken, checkedLocalToken]);
+
     const { textAlert, typeAlert, currentState } = useSelector((state : RootState) => state.notifyAlert);
     const alertTypeProp: any = "success";
     const [alertType, setAlertType] = useState(alertTypeProp);
@@ -50,18 +72,24 @@ function Login() {
         alertDefault.current.style.opacity = "0"; 
     }
     const [boxChecked, setBoxChecked] = useState(true);
-    function handleUser() {
-        const authentication : string | boolean = userValidation(inputLogin, inputPassword, accounts);
-        if (authentication === true) {
-            let logInAccount : AccountType | undefined = accounts.find((account : AccountType) => account.username === inputLogin);
-            if(logInAccount === undefined)return;
-            boxChecked === true ? dispatch(localLogIn(logInAccount.id)) : dispatch(sessionLogIn(logInAccount.id));
-            window.open('/recados', '_self');
+    
+    useEffect(() => {
+        if (token) {
+            boxChecked === true ? dispatch(localLogIn(token)) : dispatch(sessionLogIn(token));
+            setTimeout((() => { window.open('/recados', '_self'); }), 350);
         }
-        else {
+        else if (typeof error === "string") {
             setInputLoginProp(true);
-            setInputPasswordProp({error: true, helperText: authentication});
+            setInputPasswordProp({error: true, helperText: error}); 
         };
+    }, [error, token]);
+
+    function handleUser() {
+        const logInInfos : AccountInfosType = {
+            username: inputLogin,
+            password: inputPassword
+        };
+        dispatch(logInRequest(logInInfos));
     }
     const alertDefault : any = useRef();
     return (

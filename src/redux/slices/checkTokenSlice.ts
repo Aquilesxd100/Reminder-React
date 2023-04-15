@@ -1,0 +1,50 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { apiURL } from "../../helpers/requestsData";
+import { TokensValidationType, TokenAuthType, ValidTokenType } from "../../types/otherTypes";
+
+export const validTokenRequest = createAsyncThunk(
+    "",
+    async (tokenInfos : TokenAuthType, thunkAPI) => {
+        const tokenAuth = await fetch(`${apiURL}/username`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "authorization": `bearer ${tokenInfos.token}`
+                }
+            })
+            .then((res) => res.json())
+            .then((data) => data)
+            .then((data) => {
+                const validToken : ValidTokenType = {
+                    validation : false,
+                    type : tokenInfos.type
+                };
+                if(data.userName) validToken.validation = true;
+                return validToken;
+            })
+            .catch((error) => error)
+        return tokenAuth;
+    }
+)
+
+const initialState : TokensValidationType = {
+    checkedSessionToken: undefined,
+    checkedLocalToken: undefined
+};
+export const checkTokenSlice = createSlice({
+    name: "checkToken",
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(validTokenRequest.fulfilled, (state, action : any) => {
+            if(action.payload.type === "local") {
+                state.checkedLocalToken = action.payload.validation;
+            } else if (action.payload.type === "session") {
+                state.checkedSessionToken = action.payload.validation;
+            };
+        });
+    }
+});
+
+export const {} = checkTokenSlice.actions;
+export default checkTokenSlice.reducer;
