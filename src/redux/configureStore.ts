@@ -10,6 +10,8 @@ import modalManagerReducer from "./slices/modalManagerSlice";
 import checkTokenReducer from "./slices/checkTokenSlice";
 import accountReducer from "./slices/accountSlice";
 import remindersReducer from "./slices/remindersSlice";
+import searchReducer from "./slices/searchSlice";
+
 const loggedLocalConfig = {
     key: 'loggedLocalUser',
     storage,  
@@ -33,6 +35,7 @@ const store = configureStore({
         loggedSessionAccount: loggedSessionReducer,
         checkToken: checkTokenReducer,
         account: accountReducer,
+        search: searchReducer,
         reminders: remindersReducer
     },
     middleware: (getDefaultMiddleware) =>

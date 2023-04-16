@@ -23,8 +23,7 @@ function Recados() {
     const { loggedSessionAccountToken } = useSelector((state: RootState) => state.loggedSessionAccount);
     const { loggedLocalAccountToken } = useSelector((state: RootState) => state.loggedLocalAccount);
     const { storedReminders, needUpdate } = useSelector((state: RootState) => state.reminders);
-    const [archivedBox, setArchivedBox] = useState(false);
-    const [searchInput, setSearchInput] = useState("");
+    const { search, checkBox } = useSelector((state : RootState) => state.search);
     const [validToken, setValidToken] = useState<string | undefined>(undefined);
     const [currentUserName, setCurrentUserName] =  useState("");
 
@@ -64,8 +63,8 @@ function Recados() {
         if (typeof validToken !== "string") return;
         const remindersRequest : InfosRequestRemindersType = {
             token: validToken,
-            searchInput: searchInput,
-            archivedBox: archivedBox,
+            searchInput: search,
+            archivedBox: checkBox,
         };
         dispatch(listRemindersRequest(remindersRequest));
         setCurrentUserName(userName);
@@ -77,8 +76,8 @@ function Recados() {
             dispatch(resetUpdate());
             const remindersRequest : InfosRequestRemindersType = {
                 token: validToken,
-                searchInput: searchInput,
-                archivedBox: archivedBox,
+                searchInput: search,
+                archivedBox: checkBox,
             };
             dispatch(listRemindersRequest(remindersRequest));
         }

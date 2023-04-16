@@ -116,6 +116,9 @@ export const remindersSlice = createSlice({
         resetReminders: (state) => {
             state.storedReminders = [];
         },
+        setNeedUpdate: (state) => {
+            state.needUpdate = true;
+        },
         resetUpdate: (state) => {
             state.needUpdate = false;
         }
@@ -149,5 +152,5 @@ export const remindersSlice = createSlice({
     }
 });
 
-export const { resetReminders, resetUpdate } = remindersSlice.actions;
+export const { resetReminders, resetUpdate, setNeedUpdate } = remindersSlice.actions;
 export default remindersSlice.reducer;

@@ -1,5 +1,5 @@
 import { Box, FormGroup, styled } from "@mui/material";
-export const Barra = styled(Box)(() => ({
+export const Barra = styled('form')(() => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -8,7 +8,7 @@ export const Barra = styled(Box)(() => ({
         flexDirection: 'column'
     },
 }));
-export const BarraPesquisa = styled('form')(() => ({
+export const BarraPesquisa = styled(Box)(() => ({
     display: 'flex',
     backgroundColor: '#DCF1F6',
     borderLeft: 'solid 4px #75b6f8',

@@ -47,4 +47,9 @@ export interface ValidTokenType {
 
 export interface PropsModalLembrete {
     token: string | undefined
-}
+};
+
+export interface SearchStorageType {
+    search : string | undefined,
+    checkBox : boolean
+};
