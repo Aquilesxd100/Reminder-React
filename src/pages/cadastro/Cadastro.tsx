@@ -13,11 +13,11 @@ import { setNotification } from "../../redux/slices/notificationsSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
-import { createAccountRequest } from "../../redux/slices/accountSlice";
+import { createAccountRequest, setInLoadingStateAccount } from "../../redux/slices/accountSlice";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
     const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
-    const { error } = useSelector((state : RootState) => state.account);
+    const { error, loadingStateUser } = useSelector((state : RootState) => state.account);
     const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const { currentState } = useSelector((state : RootState) => state.notifyAlert);
@@ -83,7 +83,8 @@ function Cadastro() {
             password2Error: true,
         }
         if (validacaoUserName === true && validacaoPassword === true && validacaoPassword2 === true) {
-            dispatch(createAccountRequest({ username: login, password: password }));    
+            dispatch(setInLoadingStateAccount()); 
+            dispatch(createAccountRequest({ username: login, password: password })); 
         };
         if (validacaoUserName !== true || validacaoPassword !== true || validacaoPassword2 !== true) {
             setAuthSupport(true);
@@ -142,6 +143,16 @@ function Cadastro() {
             : setInputPassword2Prop({ error: false, helperText: "" });
         };
     }
+    useEffect(() => {
+        const html = document.querySelector('html');
+        if(!html)return;
+        if (loadingStateUser) {
+            html.classList.add("loadingCursor");
+        }
+        else if (loadingStateUser === false) {
+            html.classList.remove("loadingCursor");
+        };
+    }, [loadingStateUser]);
     return (
         <>
             <Corpo container>

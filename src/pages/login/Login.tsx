@@ -12,7 +12,7 @@ import { disableNotification } from "../../redux/slices/notificationsSlice";
 import { localLogIn, localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogIn, sessionLogOut } from "../../redux/slices/loggedSessionSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
-import { logInRequest } from "../../redux/slices/accountSlice";
+import { logInRequest, setInLoadingStateAccount } from "../../redux/slices/accountSlice";
 
 function Login() {
     const dispatch = useDispatch<UserStore>();
@@ -21,7 +21,7 @@ function Login() {
         helperText: "",
     };
     const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
-    const { error, token } = useSelector((state : RootState) => state.account);
+    const { error, token, loadingStateUser } = useSelector((state : RootState) => state.account);
     const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);
@@ -89,9 +89,22 @@ function Login() {
             username: inputLogin,
             password: inputPassword
         };
+        dispatch(setInLoadingStateAccount());
         dispatch(logInRequest(logInInfos));
     }
     const alertDefault : any = useRef();
+
+    useEffect(() => {
+        const html = document.querySelector('html');
+        if(!html)return;
+        if (loadingStateUser) {
+            html.classList.add("loadingCursor");
+        }
+        else if (loadingStateUser === false) {
+            html.classList.remove("loadingCursor");
+        };
+    }, [loadingStateUser]);
+    
     return (
         <>
             <Corpo container>

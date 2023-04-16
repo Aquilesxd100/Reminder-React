@@ -50,5 +50,6 @@ export interface ReminderType {
 };
 export interface RemindersStorageType {
     storedReminders: Array<ReminderType>,
-    needUpdate: boolean
+    needUpdate: boolean,
+    loadingStateReminders: boolean
 };

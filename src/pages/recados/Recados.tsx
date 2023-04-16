@@ -13,16 +13,16 @@ import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
 import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
-import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
+import { setInLoadingStateCheck, validTokenRequest } from "../../redux/slices/checkTokenSlice";
 import { TokenAuthType } from "../../types/otherTypes";
-import { listRemindersRequest, resetUpdate } from "../../redux/slices/remindersSlice";
+import { listRemindersRequest, resetUpdate, setInLoadStateReminders } from "../../redux/slices/remindersSlice";
 import PainelPesquisa from "../../components/recadosComponents/painelPesquisa/PainelPesquisa ";
 function Recados() {
     const dispatch = useDispatch<UserStore>();
-    const { checkedSessionToken, checkedLocalToken, userName } = useSelector((state : RootState) => state.checkToken);
+    const { checkedSessionToken, checkedLocalToken, userName, loadingStateCheck } = useSelector((state : RootState) => state.checkToken);
     const { loggedSessionAccountToken } = useSelector((state: RootState) => state.loggedSessionAccount);
     const { loggedLocalAccountToken } = useSelector((state: RootState) => state.loggedLocalAccount);
-    const { storedReminders, needUpdate } = useSelector((state: RootState) => state.reminders);
+    const { storedReminders, needUpdate, loadingStateReminders } = useSelector((state: RootState) => state.reminders);
     const { search, checkBox } = useSelector((state : RootState) => state.search);
     const [validToken, setValidToken] = useState<string | undefined>(undefined);
     const [currentUserName, setCurrentUserName] =  useState("");
@@ -36,6 +36,7 @@ function Recados() {
                 token: loggedLocalAccountToken,
                 type: "local"
             };
+            dispatch(setInLoadingStateCheck());
             dispatch(validTokenRequest(localToken));
         };
         if(loggedSessionAccountToken !== undefined) {
@@ -43,6 +44,7 @@ function Recados() {
                 token: loggedSessionAccountToken,
                 type: "session"
             };
+            dispatch(setInLoadingStateCheck());
             dispatch(validTokenRequest(sessionToken));
         };
     }, []);
@@ -66,6 +68,7 @@ function Recados() {
             searchInput: search,
             archivedBox: checkBox,
         };
+        dispatch(setInLoadStateReminders());
         dispatch(listRemindersRequest(remindersRequest));
         setCurrentUserName(userName);
     }, [validToken])
@@ -79,9 +82,21 @@ function Recados() {
                 searchInput: search,
                 archivedBox: checkBox,
             };
+            dispatch(setInLoadStateReminders());
             dispatch(listRemindersRequest(remindersRequest));
         }
     }, [needUpdate])
+
+    useEffect(() => {
+        const html = document.querySelector('html');
+        if(!html)return;
+        if (loadingStateReminders || loadingStateCheck) {
+            html.classList.add("loadingCursor");
+        }
+        else if (loadingStateReminders === false && loadingStateCheck === false) {
+            html.classList.remove("loadingCursor");
+        };
+    }, [loadingStateReminders, loadingStateCheck]);
 
     const reminderModel : Array<ReminderType> = [];
     const [reminders, setReminders] = useState(reminderModel);

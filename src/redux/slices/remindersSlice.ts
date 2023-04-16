@@ -107,7 +107,8 @@ export const deleteReminderRequest = createAsyncThunk(
 
 const initialState : RemindersStorageType = {
     storedReminders: [],
-    needUpdate: false
+    needUpdate: false,
+    loadingStateReminders: false
 }
 export const remindersSlice = createSlice({
     name: "reminders",
@@ -115,6 +116,9 @@ export const remindersSlice = createSlice({
     reducers: {
         resetReminders: (state) => {
             state.storedReminders = [];
+        },
+        setInLoadStateReminders: (state) => {
+            state.loadingStateReminders = true;
         },
         setNeedUpdate: (state) => {
             state.needUpdate = true;
@@ -128,29 +132,34 @@ export const remindersSlice = createSlice({
             if(!action.payload.message) {
                 state.storedReminders = action.payload;
             };
+            state.loadingStateReminders = false;
         });
         builder.addCase(deleteReminderRequest.fulfilled, (state, action) => {
             if(action.payload.message === "Recado excluído com sucesso!") {
                 state.needUpdate = true;
             }
+            state.loadingStateReminders = false;
         });
         builder.addCase(createReminderRequest.fulfilled, (state, action) => {
             if(action.payload.message === "Recado criado com sucesso!") {
                 state.needUpdate = true;
             }
+            state.loadingStateReminders = false;
         });
         builder.addCase(editReminderRequest.fulfilled, (state, action) => {
             if(action.payload.message === "Recado atualizado com sucesso.") {
                 state.needUpdate = true;
             }
+            state.loadingStateReminders = false;
         });
         builder.addCase(archiveReminderRequest.fulfilled, (state, action) => {
             if(action.payload.message && action.payload.message.search("sucesso") !== -1) {
                 state.needUpdate = true;  
             }
+            state.loadingStateReminders = false;
         })
     }
 });
 
-export const { resetReminders, resetUpdate, setNeedUpdate } = remindersSlice.actions;
+export const { resetReminders, resetUpdate, setNeedUpdate, setInLoadStateReminders } = remindersSlice.actions;
 export default remindersSlice.reducer;

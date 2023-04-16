@@ -53,7 +53,8 @@ export const deleteAccountRequest = createAsyncThunk(
 
 const initialState : AccountStatusType = {
     error: undefined,
-    token: undefined
+    token: undefined,
+    loadingStateUser : false
 }
 export const accountSlice = createSlice ({
     name: "account",
@@ -61,6 +62,9 @@ export const accountSlice = createSlice ({
     reducers: {
         resetError: (state) => {
             state.error = undefined;
+        },
+        setInLoadingStateAccount: (state) => {
+            state.loadingStateUser = true;
         }
     },
     extraReducers: (builder) => {
@@ -80,20 +84,23 @@ export const accountSlice = createSlice ({
                     errorMessage: action.payload.message
                 };
             };
+            state.loadingStateUser = false;
         });
         builder.addCase(deleteAccountRequest.fulfilled, (state, action) => {
             if (action.payload.message === "Usuário excluído com sucesso!") {
                 state.error = false;
             };
+            state.loadingStateUser = false;
         });
         builder.addCase(logInRequest.fulfilled, (state, action) => {
             if (action.payload.token) {
                 state.token = action.payload.token;
             } else {
                 state.error = action.payload.message;
-            }
+            };
+            state.loadingStateUser = false;
         });
     }
 });
-export const { resetError } = accountSlice.actions;
+export const { resetError, setInLoadingStateAccount } = accountSlice.actions;
 export default accountSlice.reducer;

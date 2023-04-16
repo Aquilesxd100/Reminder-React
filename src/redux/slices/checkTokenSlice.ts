@@ -31,12 +31,17 @@ export const validTokenRequest = createAsyncThunk(
 const initialState : TokensValidationType = {
     checkedSessionToken: undefined,
     checkedLocalToken: undefined,
-    userName: ""
+    userName: "",
+    loadingStateCheck: false
 };
 export const checkTokenSlice = createSlice({
     name: "checkToken",
     initialState,
-    reducers: {},
+    reducers: {
+        setInLoadingStateCheck: (state) => {
+            state.loadingStateCheck = true;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(validTokenRequest.fulfilled, (state, action : any) => {
             if(action.payload.userName) state.userName = action.payload.userName;
@@ -45,8 +50,9 @@ export const checkTokenSlice = createSlice({
             } else if (action.payload.type === "session") {
                 state.checkedSessionToken = action.payload.validation;
             };
+            state.loadingStateCheck = false;
         });
     }
 });
-
+export const { setInLoadingStateCheck } = checkTokenSlice.actions;
 export default checkTokenSlice.reducer;

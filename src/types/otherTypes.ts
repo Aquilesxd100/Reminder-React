@@ -33,7 +33,8 @@ export interface HeaderProps {
 export interface TokensValidationType {
     checkedSessionToken : undefined | boolean
     checkedLocalToken : undefined | boolean
-    userName: string
+    userName: string,
+    loadingStateCheck: boolean
 };
 export interface TokenAuthType {
     token : string,

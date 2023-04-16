@@ -20,7 +20,8 @@ export interface ErrorInfosType {
 };
 export interface AccountStatusType {
     error: undefined | ErrorInfosType | false,
-    token: string | undefined
+    token: string | undefined,
+    loadingStateUser : boolean
 };
 export interface AccountInfosType {
     username: string,

@@ -15,6 +15,9 @@
     font-family: hobo;
     src: url("../fonts/hobostd.woff");
 }
+html.loadingCursor, html.loadingCursor * {
+    cursor: wait !important;
+}
 body {
     width: 100%;
     min-height: 100vh;
