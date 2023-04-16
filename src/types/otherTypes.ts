@@ -27,15 +27,13 @@ export interface MinimumDateType {
     minDate: string
 };
 export interface HeaderProps {
+    token: string | undefined,
     userName: string,
-    userID : string
-};
-export interface ModalExclusaoProp {
-    userID: string,
 };
 export interface TokensValidationType {
     checkedSessionToken : undefined | boolean
     checkedLocalToken : undefined | boolean
+    userName: string
 };
 export interface TokenAuthType {
     token : string,
@@ -43,5 +41,10 @@ export interface TokenAuthType {
 };
 export interface ValidTokenType {
     validation : boolean,
-    type : "local" | "session"
+    type : "local" | "session",
+    userName : string
 };
+
+export interface PropsModalLembrete {
+    token: string | undefined
+}

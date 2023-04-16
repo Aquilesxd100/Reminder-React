@@ -20,7 +20,7 @@ function Header(props : HeaderProps) {
     }
     return(
         <HeaderDiv>
-            <ModalExclusao userID={props.userID} />
+            <ModalExclusao token={props.token} />
             <MiniLogo src={miniLogoIMG} />
             <PainelUsuario>
                 <InfoUsuario>

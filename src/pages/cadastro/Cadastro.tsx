@@ -10,14 +10,14 @@ import userValidation from "../../helpers/newAccount/userValidationCreation";
 import passwordValidation from "../../helpers/newAccount/passwordValidationCreation";
 import { RootState, useStoreDispatch } from "../../redux/configureStore";
 import { setNotification } from "../../redux/slices/notificationsSlice";
-import { createAccountRequest } from "../../redux/slices/newAccountSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
+import { createAccountRequest } from "../../redux/slices/accountSlice";
 function Cadastro() {
     const dispatch =  useStoreDispatch();
     const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
-    const { error } = useSelector((state : RootState) => state.newAccount);
+    const { error } = useSelector((state : RootState) => state.account);
     const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const { currentState } = useSelector((state : RootState) => state.notifyAlert);

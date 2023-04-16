@@ -3,7 +3,7 @@ import { AccountInfosType, LogInStatusType } from "../../types/userTypes";
 import { apiURL } from "../../helpers/requestsData";
 
 export const logInRequest = createAsyncThunk(
-    "",
+    "logIn",
     async (logInInfos : AccountInfosType, thunkAPI) => {
         const response = await fetch(`${apiURL}/login/${logInInfos.username}/${logInInfos.password}`, {
             method: "GET",

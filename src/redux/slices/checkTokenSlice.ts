@@ -3,7 +3,7 @@ import { apiURL } from "../../helpers/requestsData";
 import { TokensValidationType, TokenAuthType, ValidTokenType } from "../../types/otherTypes";
 
 export const validTokenRequest = createAsyncThunk(
-    "",
+    "validToken",
     async (tokenInfos : TokenAuthType, thunkAPI) => {
         const tokenAuth = await fetch(`${apiURL}/username`, {
                 method: "GET",
@@ -17,7 +17,8 @@ export const validTokenRequest = createAsyncThunk(
             .then((data) => {
                 const validToken : ValidTokenType = {
                     validation : false,
-                    type : tokenInfos.type
+                    type : tokenInfos.type,
+                    userName: data.userName ? data.userName : undefined
                 };
                 if(data.userName) validToken.validation = true;
                 return validToken;
@@ -29,7 +30,8 @@ export const validTokenRequest = createAsyncThunk(
 
 const initialState : TokensValidationType = {
     checkedSessionToken: undefined,
-    checkedLocalToken: undefined
+    checkedLocalToken: undefined,
+    userName: ""
 };
 export const checkTokenSlice = createSlice({
     name: "checkToken",
@@ -37,6 +39,7 @@ export const checkTokenSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(validTokenRequest.fulfilled, (state, action : any) => {
+            if(action.payload.userName) state.userName = action.payload.userName;
             if(action.payload.type === "local") {
                 state.checkedLocalToken = action.payload.validation;
             } else if (action.payload.type === "session") {

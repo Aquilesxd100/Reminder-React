@@ -2,22 +2,20 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { RootState } from "../../../redux/configureStore";
-import { AccountType } from "../../../types/userTypes";
-import { LembreteType, ReminderInfos } from "../../../types/reminderTypes";
-import { MinimumDateType } from "../../../types/otherTypes";
+import { RootState, UserStore } from "../../../redux/configureStore";
+import { ReminderType } from "../../../types/reminderTypes";
+import { MinimumDateType, PropsModalLembrete } from "../../../types/otherTypes";
 import { FormularioLembrete, InputAcao, InputData, InputDescricao, InputHora, LabelInput, TabelaLembrete, ThAcao, ThData, ThDescricao, ThHora} from "./modalLembreteStyled";
 import { BotaoCancelar, BotaoConfirmar, DivBotoes } from "../../../styles/global";
 import dateOrganizerBR from "../../../helpers/reminders/dateOrganizerBR";
-import initialUpperLetter from "../../../helpers/reminders/initialUpperLetter";
 import setMinimumHour from "../../../helpers/reminders/setMinimumHour";
 import setMinimumDate from "../../../helpers/reminders/setMinimumDate";
 import { hideReminderModal } from "../../../redux/slices/modalManagerSlice";
-import { editReminder, newReminder } from "../../../redux/slices/userSlice";
+import { createReminderRequest, editReminderRequest } from "../../../redux/slices/remindersSlice";
 
-function ModalLembrete(lembreteInfo : ReminderInfos) {
-    const { accounts } = useSelector((state : RootState) => state.users);
-    const dispatch = useDispatch();
+function ModalLembrete(props : PropsModalLembrete) {
+    const { storedReminders } = useSelector((state : RootState) => state.reminders);
+    const dispatch = useDispatch<UserStore>();
 
     const modalVisualProps = {
         pointerEvents: 'none',
@@ -35,13 +33,12 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
                 inputDescricao.current.value = "";
             }
             else if (showReminderModalState.type === "edit") {
-                const accountIndex = accounts.findIndex((account : AccountType) => account.id === lembreteInfo.accountId);
-                const reminder : LembreteType | undefined = accounts[accountIndex].reminders.find((reminder : LembreteType) => reminder.id === showReminderModalState.reminderEditID);
+                const reminder : ReminderType | undefined = storedReminders.find((reminder : ReminderType) => reminder.id === showReminderModalState.reminderEditID);
                 if(reminder === undefined)return;               
-                inputAcao.current.value = reminder.acao;
-                inputData.current.value = dateOrganizerBR(reminder.data, "NA-Format");
-                inputHora.current.value = reminder.hora;
-                inputDescricao.current.value = reminder.descricao;
+                inputAcao.current.value = reminder.action;
+                inputData.current.value = dateOrganizerBR(reminder.date, "NA-Format");
+                inputHora.current.value = reminder.time;
+                inputDescricao.current.value = reminder.description;
             }
             setModalVisual({
                 pointerEvents: 'auto',
@@ -62,23 +59,24 @@ function ModalLembrete(lembreteInfo : ReminderInfos) {
     function submitHandle() {
         dispatch(hideReminderModal())
         if (showReminderModalState.type === "new") {
-            dispatch(newReminder({
-                accountID: lembreteInfo.accountId,
-                acao: initialUpperLetter(inputAcao.current.value),
-                data: dateOrganizerBR(inputData.current.value, "BR-Format"),
-                hora: inputHora.current.value,
-                descricao: initialUpperLetter(inputDescricao.current.value),
+            if(typeof props.token !== "string") return;
+            dispatch(createReminderRequest({
+                token: props.token,
+                action: inputAcao.current.value,
+                date: dateOrganizerBR(inputData.current.value, "BR-Format"),
+                time: inputHora.current.value,
+                description: inputDescricao.current.value,
             }));
         }
         else if (showReminderModalState.type === "edit") {
             dispatch(hideReminderModal());
-            dispatch(editReminder({
-                reminderID: showReminderModalState.reminderEditID,
-                accountID: lembreteInfo.accountId,
-                acao: initialUpperLetter(inputAcao.current.value),
-                data: dateOrganizerBR(inputData.current.value, "BR-Format"),
-                hora: inputHora.current.value,
-                descricao: initialUpperLetter(inputDescricao.current.value),
+            dispatch(editReminderRequest({
+                reminderId: showReminderModalState.reminderEditID,
+                token: props.token,
+                action: inputAcao.current.value,
+                date: dateOrganizerBR(inputData.current.value, "BR-Format"),
+                time: inputHora.current.value,
+                description: inputDescricao.current.value,
             }));
         };
     }

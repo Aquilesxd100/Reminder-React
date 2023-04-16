@@ -7,8 +7,7 @@ import { Typography } from "@mui/material";
 import LinhaEspacamento from "../../components/recadosComponents/linhaEspaco/LinhaEspacamento";
 import ModalLembrete from "../../components/recadosComponents/modalLembrete/ModalLembrete";
 import { RootState, UserStore } from "../../redux/configureStore";
-import { AccountType } from "../../types/userTypes";
-import { LembreteType } from "../../types/reminderTypes";
+import { InfosRequestRemindersType, ReminderType } from "../../types/reminderTypes";
 import { RecadosDiv, BarraTituloTabela, TituloTabela, DivNovoLembrete, BotaoAdicionar, SecaoLembretes, Lembretes,TabelaLembretes, AvisoLembreteVazio, Nuvemlembretes } from "./RecadosStyled";
 import remindersOrganizer from "../../helpers/reminders/remindersOrganizer";
 import { showReminderModal } from "../../redux/slices/modalManagerSlice";
@@ -16,14 +15,22 @@ import { sessionLogOut } from "../../redux/slices/loggedSessionSlice";
 import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
 import { TokenAuthType } from "../../types/otherTypes";
+import { listRemindersRequest, resetUpdate } from "../../redux/slices/remindersSlice";
 function Recados() {
     const dispatch = useDispatch<UserStore>();
-    const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
+    const { checkedSessionToken, checkedLocalToken, userName } = useSelector((state : RootState) => state.checkToken);
     const { loggedSessionAccountToken } = useSelector((state: RootState) => state.loggedSessionAccount);
     const { loggedLocalAccountToken } = useSelector((state: RootState) => state.loggedLocalAccount);
-    const { accounts } = useSelector((state: RootState) => state.users);
+    const { storedReminders, needUpdate } = useSelector((state: RootState) => state.reminders);
+    const [archivedBox, setArchivedBox] = useState(false);
+    const [searchInput, setSearchInput] = useState("");
+    const [validToken, setValidToken] = useState<string | undefined>(undefined);
+    const [currentUserName, setCurrentUserName] =  useState("");
 
     useEffect(() => {
+        if (loggedSessionAccountToken === undefined && loggedLocalAccountToken === undefined) {
+            window.open("/login", "_self");
+        };
         if (loggedLocalAccountToken !== undefined) {
             const localToken : TokenAuthType = {
                 token: loggedLocalAccountToken,
@@ -44,34 +51,45 @@ function Recados() {
         if(checkedLocalToken === false) dispatch(localLogOut());
         if (checkedSessionToken === false || checkedLocalToken === false) {
             setTimeout(() => { window.open("/login", "_self"); }, 350);
-        };
+        }
+        else if (checkedLocalToken || checkedSessionToken) {
+            setValidToken(loggedSessionAccountToken !== undefined
+            ? loggedSessionAccountToken 
+            : loggedLocalAccountToken);
+        }
     }, [checkedSessionToken, checkedLocalToken]);
 
-    const userModel : AccountType = {
-        id: "",
-        username: "",
-        password: "",
-        reminders: []
-    };
-    const reminderModel : Array<LembreteType> = [];
-    const [user, setUser] = useState(userModel);
-    const [reminders, setReminders] = useState(reminderModel);
     useEffect(() => {
-        const remindersByDateOrder : Array<LembreteType> = remindersOrganizer(user.reminders);
-        setReminders(remindersByDateOrder);
-    }, [user]);
-    useEffect(() => {
-        const loggedAccountID : string | undefined = loggedSessionAccountToken !== undefined ? loggedSessionAccountToken : loggedLocalAccountToken;
-        const loggedAccount : AccountType | undefined = accounts.find((account : AccountType) => account.id === loggedAccountID);
-        if(loggedAccount === undefined)return;
-        setUser(loggedAccount);
-    }, [accounts]);
+        if (typeof validToken !== "string") return;
+        const remindersRequest : InfosRequestRemindersType = {
+            token: validToken,
+            searchInput: searchInput,
+            archivedBox: archivedBox,
+        };
+        dispatch(listRemindersRequest(remindersRequest));
+        setCurrentUserName(userName);
+    }, [validToken])
 
     useEffect(() => {
-        if (loggedSessionAccountToken === undefined && loggedLocalAccountToken === undefined) {
-            window.open("/login", "_self");
+        if(needUpdate) {
+            if (typeof validToken !== "string") return;
+            dispatch(resetUpdate());
+            const remindersRequest : InfosRequestRemindersType = {
+                token: validToken,
+                searchInput: searchInput,
+                archivedBox: archivedBox,
+            };
+            dispatch(listRemindersRequest(remindersRequest));
         }
-    }, []);
+    }, [needUpdate])
+
+    const reminderModel : Array<ReminderType> = [];
+    const [reminders, setReminders] = useState(reminderModel);
+    useEffect(() => {
+        const remindersByDateOrder : Array<ReminderType> = remindersOrganizer(storedReminders);
+        setReminders(remindersByDateOrder);
+    }, [storedReminders]);
+
     function newReminderModal() {
         const reminderInfos = {
             type: 'new',
@@ -81,7 +99,7 @@ function Recados() {
     };
     return (
         <Corpo sx={{height: 'auto', minHeight: '100vh', paddingBottom: '20px'}}>
-            <Header userID={user.id} userName={user.username} />
+            <Header token={validToken} userName={currentUserName} />
             <RecadosDiv>
                 <BarraTituloTabela>
                     <TituloTabela>
@@ -95,16 +113,16 @@ function Recados() {
                 </BarraTituloTabela>
                 <SecaoLembretes>
                     <Lembretes>
-                        {!user.reminders.length && <AvisoLembreteVazio>
+                        {!storedReminders.length && <AvisoLembreteVazio>
                             <Nuvemlembretes>
                                 <Typography variant="subtitle2">Você ainda não tem lembretes...</Typography>
                                 <Typography variant="subtitle2">Clique em "adicionar" para criar um!</Typography>
                             </Nuvemlembretes>
                         </AvisoLembreteVazio>}
-                        <ModalLembrete accountId={user.id} />
+                        <ModalLembrete token={validToken}  />
                         <TabelaLembretes>
                             {!!reminders.length && reminders.map((reminder) => (
-                                <Lembrete key={reminder.id} accountId={user.id} id={reminder.id} acao={reminder.acao} data={reminder.data} hora={reminder.hora} descricao={reminder.descricao} />
+                                <Lembrete token={validToken} key={reminder.id} id={reminder.id} acao={reminder.action} data={reminder.date} hora={reminder.time} descricao={reminder.description} />
                             ))}
                             <LinhaEspacamento/>
                         </TabelaLembretes>

@@ -1,12 +1,13 @@
-import { LembreteType } from "../../types/reminderTypes";
+import { LembreteType, ReminderType } from "../../types/reminderTypes";
 
-export default function remindersOrganizer(reminders : Array<LembreteType>) : Array<LembreteType> {
-    let filteredReminders : Array<LembreteType> = [];
+export default function remindersOrganizer(reminders : Array<ReminderType>) : Array<ReminderType> {
+    if(!reminders.length) return reminders;
+    let filteredReminders : Array<ReminderType> = [];
     while (reminders.length !== 0) {
         let earlierReminder = reminders[0];
         for (let reminder of reminders) {
-            let minute = Number((reminder.hora).substring(4, 5));
-            let earlierMinute = Number((earlierReminder.hora).substring(4, 5))
+            let minute = Number((reminder.time).substring(4, 5));
+            let earlierMinute = Number((earlierReminder.time).substring(4, 5))
             if (minute < earlierMinute) {
                 earlierMinute = minute;
                 earlierReminder = reminder;
@@ -20,8 +21,8 @@ export default function remindersOrganizer(reminders : Array<LembreteType>) : Ar
     while (reminders.length !== 0) {
         let earlierReminder = reminders[0];
         for (let reminder of reminders) {
-            let hour = Number((reminder.hora).substring(0, 2));
-            let earlierHour = Number((earlierReminder.hora).substring(0, 2))
+            let hour = Number((reminder.time).substring(0, 2));
+            let earlierHour = Number((earlierReminder.time).substring(0, 2))
             if (hour < earlierHour) {
                 earlierHour = hour;
                 earlierReminder = reminder;
@@ -35,8 +36,8 @@ export default function remindersOrganizer(reminders : Array<LembreteType>) : Ar
     while (reminders.length !== 0) {
         let earlierReminder = reminders[0];
         for (let reminder of reminders) {
-            let day = Number((reminder.data).substring(0, 2));
-            let earlierDay = Number((earlierReminder.data).substring(0, 2))
+            let day = Number((reminder.date).substring(0, 2));
+            let earlierDay = Number((earlierReminder.date).substring(0, 2))
             if (day < earlierDay) {
                 earlierDay = day;
                 earlierReminder = reminder;
@@ -50,8 +51,8 @@ export default function remindersOrganizer(reminders : Array<LembreteType>) : Ar
     while (reminders.length !== 0) {
         let earlierReminder = reminders[0];
         for (let reminder of reminders) {
-            let month = Number((reminder.data).substring(3, 5));
-            let earlierMonth = Number((earlierReminder.data).substring(3, 5))
+            let month = Number((reminder.date).substring(3, 5));
+            let earlierMonth = Number((earlierReminder.date).substring(3, 5))
             if (month < earlierMonth) {
                 earlierMonth = month;
                 earlierReminder = reminder;
@@ -65,8 +66,8 @@ export default function remindersOrganizer(reminders : Array<LembreteType>) : Ar
     while (reminders.length !== 0) {
         let earlierReminder = reminders[0];
         for (let reminder of reminders) {
-            let year = Number((reminder.data).substring(6, 10));
-            let earlierYear = Number((earlierReminder.data).substring(6, 10))
+            let year = Number((reminder.date).substring(6, 10));
+            let earlierYear = Number((earlierReminder.date).substring(6, 10))
             if (year < earlierYear) {
                 earlierYear = year;
                 earlierReminder = reminder;

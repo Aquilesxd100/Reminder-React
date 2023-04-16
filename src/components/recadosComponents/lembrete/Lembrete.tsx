@@ -2,12 +2,13 @@ import { useDispatch } from 'react-redux';
 import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { LembreteInfoType } from "../../../types/reminderTypes";
+import { InfosRequestDeleteReminderType, LembreteInfoType } from "../../../types/reminderTypes";
 import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
-import { deleteReminder } from '../../../redux/slices/userSlice';
 import { showReminderModal } from "../../../redux/slices/modalManagerSlice";
+import { deleteReminderRequest } from '../../../redux/slices/remindersSlice';
+import { UserStore } from '../../../redux/configureStore';
 function Lembrete(lembreteInfos : LembreteInfoType) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<UserStore>();
 
     function editReminderHandle() {
         const reminderInfos = {
@@ -17,11 +18,11 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
         dispatch(showReminderModal(reminderInfos));
     }
     function deleteReminderHandle() {
-        const reminder = {
-            accountID : lembreteInfos.accountId,
-            reminderID : lembreteInfos.id
-        }
-        dispatch(deleteReminder(reminder));
+        const reminder : InfosRequestDeleteReminderType = {
+            token: lembreteInfos.token,
+            reminderId: lembreteInfos.id
+        };
+        dispatch(deleteReminderRequest(reminder));
     }
     return(
         <>
