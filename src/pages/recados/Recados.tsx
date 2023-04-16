@@ -16,6 +16,7 @@ import { localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
 import { TokenAuthType } from "../../types/otherTypes";
 import { listRemindersRequest, resetUpdate } from "../../redux/slices/remindersSlice";
+import PainelPesquisa from "../../components/recadosComponents/painelPesquisa/PainelPesquisa ";
 function Recados() {
     const dispatch = useDispatch<UserStore>();
     const { checkedSessionToken, checkedLocalToken, userName } = useSelector((state : RootState) => state.checkToken);
@@ -112,6 +113,7 @@ function Recados() {
                     </DivNovoLembrete>
                 </BarraTituloTabela>
                 <SecaoLembretes>
+                    <PainelPesquisa />
                     <Lembretes>
                         {!storedReminders.length && <AvisoLembreteVazio>
                             <Nuvemlembretes>
