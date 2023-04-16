@@ -4,7 +4,8 @@ export interface LembreteInfoType {
     acao: string,
     data: string,
     hora: string,
-    descricao: string
+    descricao: string,
+    archived: boolean,
 };
 export interface ReminderModalStateType {
     type: string,

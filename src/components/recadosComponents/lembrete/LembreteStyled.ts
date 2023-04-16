@@ -1,6 +1,7 @@
 import { Button, styled } from "@mui/material";
 import fundolembretesIMG from "../../../images/fundo-lembretes.jpg";
 export const LembreteTBody = styled('tbody')(() => ({
+    position: 'relative',
     '& tr' : {
         backgroundImage: `url(${fundolembretesIMG})`,
         backgroundSize: 'cover',
@@ -22,6 +23,7 @@ export const LembreteTBody = styled('tbody')(() => ({
         '& th' : {
             padding: '5px 10px',
             fontSize: '16px',
+            zIndex: '+1'
         },
         '& span' : {
             fontSize: '20px',
@@ -152,5 +154,39 @@ export const BotaoExcluirMobile = styled(BotaoExcluir)(() => ({
 }));
 export const BotaoEdicaoMobile = styled(BotaoEdicao)(() => ({
     padding: '6px 20px',
+}));
+export const BotaoArquivarMobile = styled(BotaoEdicao)(() => ({
+    backgroundColor: "#FF4000",
+    padding: '6px 20px',
+    ':hover': {
+        backgroundColor: "#FF8000",  
+    }
+}));
+export const BotaoArquivar = styled('button')(() => ({
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '-1.5px',
+    right: '-1.5px',
+    border: 'solid 2.7px #5A79D3',
+    borderRadius: '2px',
+    width: '28px',
+    height: '28px',
+    backgroundColor: '#5596C6',
+    '& svg': {
+        width: '0.9em',
+        height: '0.9em',
+        color: '#FFFFFF'
+    },
+    ':hover' : {
+        cursor: 'pointer',
+        backgroundColor: '#85ADEF',
+        filter: 'brightness(1.25)',
+        borderColor: '#333333',
+        '& svg' : {
+            color: '#333333',
+        }
+    }
 }));
 

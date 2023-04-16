@@ -2,10 +2,12 @@ import { useDispatch } from 'react-redux';
 import LinhaEspacamento from "../linhaEspaco/LinhaEspacamento";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import { InfosRequestDeleteReminderType, LembreteInfoType } from "../../../types/reminderTypes";
-import { BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
+import { BotaoArquivar, BotaoArquivarMobile, BotaoEdicao, BotaoEdicaoMobile, BotaoExcluir, BotaoExcluirMobile, LembreteTBody, ThAcao, ThBotoesDesktop, ThBotoesMobile, ThData, ThDescricao, ThHora, TrBasico, TrBotoesMobile, TrDescricao } from "./LembreteStyled";
 import { showReminderModal } from "../../../redux/slices/modalManagerSlice";
-import { deleteReminderRequest } from '../../../redux/slices/remindersSlice';
+import { archiveReminderRequest, deleteReminderRequest } from '../../../redux/slices/remindersSlice';
 import { UserStore } from '../../../redux/configureStore';
 function Lembrete(lembreteInfos : LembreteInfoType) {
     const dispatch = useDispatch<UserStore>();
@@ -24,6 +26,13 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
         };
         dispatch(deleteReminderRequest(reminder));
     }
+    function archiveReminderHandler() {
+        const reminder : InfosRequestDeleteReminderType = {
+            token: lembreteInfos.token,
+            reminderId: lembreteInfos.id
+        };
+        dispatch(archiveReminderRequest(reminder));
+    };
     return(
         <>
             <LinhaEspacamento/>
@@ -33,6 +42,10 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                     <ThData><p><span>Data:&nbsp;</span>{lembreteInfos.data}</p></ThData>
                     <ThHora><p><span>Hora{"(s)"}:&nbsp;</span>{lembreteInfos.hora}</p></ThHora>
                     <ThBotoesDesktop>
+                        <BotaoArquivar onClick={(() => { archiveReminderHandler() })}>
+                            {!lembreteInfos.archived && <ArchiveIcon />}
+                            {lembreteInfos.archived && <UnarchiveIcon />}
+                        </BotaoArquivar>  
                         <BotaoEdicao onClick={(() => { editReminderHandle() })} variant="outlined" size="medium">
                             <EditIcon />
                         </BotaoEdicao>
@@ -54,6 +67,10 @@ function Lembrete(lembreteInfos : LembreteInfoType) {
                         <BotaoExcluirMobile onClick={(() => { deleteReminderHandle() })} variant="outlined" size="medium">
                             <DeleteIcon />
                         </BotaoExcluirMobile>
+                        <BotaoArquivarMobile onClick={(() => { archiveReminderHandler() })} variant="outlined" size="medium">
+                            {!lembreteInfos.archived && <ArchiveIcon />}
+                            {lembreteInfos.archived && <UnarchiveIcon />}
+                        </BotaoArquivarMobile>
                     </ThBotoesMobile>
                 </TrBotoesMobile>
             </LembreteTBody>

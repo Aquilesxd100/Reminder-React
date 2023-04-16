@@ -122,7 +122,7 @@ function Recados() {
                         <ModalLembrete token={validToken}  />
                         <TabelaLembretes>
                             {!!reminders.length && reminders.map((reminder) => (
-                                <Lembrete token={validToken} key={reminder.id} id={reminder.id} acao={reminder.action} data={reminder.date} hora={reminder.time} descricao={reminder.description} />
+                                <Lembrete token={validToken} key={reminder.id} archived={reminder.archived} id={reminder.id} acao={reminder.action} data={reminder.date} hora={reminder.time} descricao={reminder.description} />
                             ))}
                             <LinhaEspacamento/>
                         </TabelaLembretes>

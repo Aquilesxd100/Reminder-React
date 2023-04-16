@@ -69,6 +69,23 @@ export const editReminderRequest = createAsyncThunk(
         .catch((error) => error)
         return response;
     }
+);
+
+export const archiveReminderRequest = createAsyncThunk(
+    "archiveReminder",
+    async (infosRequest : InfosRequestDeleteReminderType, thunkAPI) => {
+        const response = await fetch(`${apiURL}/archivereminder/${infosRequest.reminderId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": `bearer ${infosRequest.token}`
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => data)
+        .catch((error) => error)
+        return response;
+    }
 )
 
 export const deleteReminderRequest = createAsyncThunk(
@@ -86,7 +103,7 @@ export const deleteReminderRequest = createAsyncThunk(
         .catch((error) => error)
         return response;
     }
-)
+);
 
 const initialState : RemindersStorageType = {
     storedReminders: [],
@@ -124,6 +141,11 @@ export const remindersSlice = createSlice({
                 state.needUpdate = true;
             }
         });
+        builder.addCase(archiveReminderRequest.fulfilled, (state, action) => {
+            if(action.payload.message && action.payload.message.search("sucesso") !== -1) {
+                state.needUpdate = true;  
+            }
+        })
     }
 });
 
