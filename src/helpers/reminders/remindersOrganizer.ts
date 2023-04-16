@@ -1,4 +1,4 @@
-import { LembreteType, ReminderType } from "../../types/reminderTypes";
+import { ReminderType } from "../../types/reminderTypes";
 
 export default function remindersOrganizer(reminders : Array<ReminderType>) : Array<ReminderType> {
     if(!reminders.length) return reminders;

@@ -49,5 +49,4 @@ export const checkTokenSlice = createSlice({
     }
 });
 
-export const {} = checkTokenSlice.actions;
 export default checkTokenSlice.reducer;

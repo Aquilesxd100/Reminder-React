@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { HeaderDiv, MiniLogo, PainelUsuario, InfoUsuario, IconeUsuario, BotaoSairDiv, BotaoExcluirDiv, BotaoPainel } from "./HeaderStyles";
 import miniLogoIMG from "../../images/logo_menor.png";
 import perfilUsuarioIMG from "../../images/icone-usuario.png";

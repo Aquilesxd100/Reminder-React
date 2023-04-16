@@ -7,14 +7,9 @@ import loggedSessionSliceReducer from "./slices/loggedSessionSlice";
 import notificationsSliceReducer from "./slices/notificationsSlice";
 import loggedLocalSliceReducer from "./slices/loggedLocalSlice";
 import modalManagerReducer from "./slices/modalManagerSlice";
-import logInReducer from "./slices/logInSlice";
 import checkTokenReducer from "./slices/checkTokenSlice";
 import accountReducer from "./slices/accountSlice";
 import remindersReducer from "./slices/remindersSlice";
-const usersStorageConfig = {
-    key: 'accounts',
-    storage,  
-};
 const loggedLocalConfig = {
     key: 'loggedLocalUser',
     storage,  
@@ -34,7 +29,6 @@ const store = configureStore({
     reducer: {
         modalManager: modalManagerReducer,
         notifyAlert: notificationsReducer,
-        logIn: logInReducer,
         loggedLocalAccount: loggedLocalReducer,
         loggedSessionAccount: loggedSessionReducer,
         checkToken: checkTokenReducer,

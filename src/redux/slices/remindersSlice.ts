@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { InfosRequestDeleteReminderType, InfosRequestEditReminderType, InfosRequestNewReminderType, InfosRequestRemindersType, ReminderType, RemindersStorageType } from "../../types/reminderTypes";
+import { InfosRequestDeleteReminderType, InfosRequestEditReminderType, InfosRequestNewReminderType, InfosRequestRemindersType, RemindersStorageType } from "../../types/reminderTypes";
 import { apiURL } from "../../helpers/requestsData";
 
 export const listRemindersRequest = createAsyncThunk(

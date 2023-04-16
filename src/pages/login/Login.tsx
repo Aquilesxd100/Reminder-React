@@ -7,12 +7,13 @@ import { AlertCustom } from "./LoginStyled";
 import { BlocoNotas, Linha, InputPadrao, BotaoFormulario, Formulario, Corpo } from "../../styles/global";
 import { RootState, UserStore } from "../../redux/configureStore";
 import { ErrorInputProp, TokenAuthType } from "../../types/otherTypes";
-import { AccountInfosType, AccountType } from "../../types/userTypes"
+import { AccountInfosType } from "../../types/userTypes"
 import { disableNotification } from "../../redux/slices/notificationsSlice";
 import { localLogIn, localLogOut } from "../../redux/slices/loggedLocalSlice";
 import { sessionLogIn, sessionLogOut } from "../../redux/slices/loggedSessionSlice";
-import { logInRequest } from "../../redux/slices/logInSlice";
 import { validTokenRequest } from "../../redux/slices/checkTokenSlice";
+import { logInRequest } from "../../redux/slices/accountSlice";
+
 function Login() {
     const dispatch = useDispatch<UserStore>();
     const errorAndInfoProp : ErrorInputProp = {
@@ -20,7 +21,7 @@ function Login() {
         helperText: "",
     };
     const { checkedSessionToken, checkedLocalToken } = useSelector((state : RootState) => state.checkToken);
-    const { error, token } = useSelector((state : RootState) => state.logIn);
+    const { error, token } = useSelector((state : RootState) => state.account);
     const { loggedLocalAccountToken } = useSelector((state : RootState) => state.loggedLocalAccount);
     const { loggedSessionAccountToken } = useSelector((state : RootState) => state.loggedSessionAccount);
     const [inputLoginProp, setInputLoginProp] = useState(false);

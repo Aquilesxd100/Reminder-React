@@ -18,6 +18,22 @@ export const createAccountRequest = createAsyncThunk(
     }
 );
 
+export const logInRequest = createAsyncThunk(
+    "logIn",
+    async (logInInfos : AccountInfosType, thunkAPI) => {
+        const response = await fetch(`${apiURL}/login/${logInInfos.username}/${logInInfos.password}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => data)
+        .catch((error) => error)
+        return response;
+    }
+)
+
 export const deleteAccountRequest = createAsyncThunk(
     "deleteAccount",
     async (token : string | undefined, thunkAPI) => {
@@ -37,6 +53,7 @@ export const deleteAccountRequest = createAsyncThunk(
 
 const initialState : AccountStatusType = {
     error: undefined,
+    token: undefined
 }
 export const accountSlice = createSlice ({
     name: "account",
@@ -68,6 +85,13 @@ export const accountSlice = createSlice ({
             if (action.payload.message === "Usuário excluído com sucesso!") {
                 state.error = false;
             };
+        });
+        builder.addCase(logInRequest.fulfilled, (state, action) => {
+            if (action.payload.token) {
+                state.token = action.payload.token;
+            } else {
+                state.error = action.payload.message;
+            }
         });
     }
 });
