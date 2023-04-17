@@ -84,6 +84,7 @@ export const AvisoLembreteVazio = styled('div')(() => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '10px'
 })); 
 export const Nuvemlembretes = styled('div')(() => ({
     padding: '9.5vw 4vw 5.5vw 4vw',
